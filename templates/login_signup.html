@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'search.html' %}
+
+
+<!-- Login Modal -->
+<div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+
+                <div class="row justify-content-md-center">
+                    <div class="col-md-7 col-lg-5">
+                        <h2 class="join-message">Create Account</h2>
+                        <form action="/signup" method="POST" id="user_form">
+                            {{ signup_form.hidden_tag() }}
+
+                            {% for field in signup_form if field.widget.input_type != 'hidden' %}
+                            {% for error in field.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                            {{ field(placeholder=field.label.text, class="form-control") }}
+                            {% endfor %}
+
+                            <button class="btn btn-primary btn-lg btn-block">Sign up!</button>
+                        </form>
+                    </div>
+                </div>
+
+
+
+                <div class="row justify-content-md-center">
+                    <div class="col-md-7 col-lg-5">
+                        <h2 class="join-message">Login</h2>
+                        <form action="/login" method="POST" id="user_form">
+                            {{ login_form.hidden_tag() }}
+
+                            {% for field in login_form if field.widget.input_type != 'hidden' %}
+                            {% for error in field.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                            {{ field(placeholder=field.label.text, class="form-control") }}
+                            {% endfor %}
+
+                            <button class="btn btn-primary btn-lg btn-block">Login</button>
+                        </form>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

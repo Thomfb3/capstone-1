@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'search.html' %}
+<h1>User Home</h1>
+<div class="container">
+    <div class="row">
+        {% for res in results %}
+        <div>
+            <h1>{{res.title}}</h1>
+            <img src="{{res.image}}">
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+<div class="container-fluid bg-dark">
+
+{% endblock %}
