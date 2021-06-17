@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% include 'search.html' %}
+{% include 'includes/search.html' %}
 
-<div class="results-container">
+<div class="results-container" id="results-container">
 
     {% if results|length > 0 %}
     <div class="mb-2">

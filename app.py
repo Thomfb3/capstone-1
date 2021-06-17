@@ -30,6 +30,7 @@ connect_db(app)
 API_KEY = "ac7991b98f02431da8a378c8d61af292"
 
 API_SEARCH_BASE = "https://api.spoonacular.com/recipes/complexSearch"
+API_RECIPE_BASE = "https://api.spoonacular.com/recipes/"
 SEARCH_RESULTS = "10"
 
 ##############################################################################
@@ -118,7 +119,6 @@ def login():
 
 
 
-
 @app.route('/logout')
 def logout():
     """Handle logout of user."""
@@ -138,27 +138,19 @@ def homepage_search():
     if g.user:
         return redirect("/user_home")
 
-    return render_template('home.html')
-
-
-
-@app.route('/login_signup')
-def show_login_signup_forms():
-    if g.user:
-        return redirect("/user_home")
-
     signup_form = UserSignupForm()
     login_form = UserLoginForm()
 
-    return render_template('login_signup.html', signup_form=signup_form, login_form=login_form)
+    return render_template('home.html', signup_form=signup_form, login_form=login_form)
+
 
 
 @app.route('/results')
 def homepage_search_results():
     """Show homepage """
 
-    # if g.user:
-    #     return redirect("/user_home")
+    signup_form = UserSignupForm()
+    login_form = UserLoginForm()
 
     search = request.args.get('q')
 
@@ -168,13 +160,33 @@ def homepage_search_results():
 
     res = response.json()['results']
 
-    return render_template('results.html', results=res)
+    if g.user:
+        return render_template('includes/user_results.html', results=res)
+
+    return render_template('includes/results.html', results=res, signup_form=signup_form, login_form=login_form)
 
 
 
 @app.route('/user_home')
 def user_homepage_search():
-    if g.user:
-        return render_template('user_home.html')
+    if not g.user:
+        return redirect("/")
+    
+    return render_template('user_home.html')
 
-    return redirect('/')
+
+
+
+@app.route('/recipe/<int:recipe_id>')
+def show_recipe_information(recipe_id):
+    """Show homepage """
+    if not g.user:
+        return redirect("/")
+
+    params={"apiKey": API_KEY, "includeNutrition" : "false"}
+
+    response = requests.get(f"https://api.spoonacular.com/recipes/{recipe_id}/information",  params=params)
+
+    recipe = response.json()
+
+    return render_template('includes/recipe.html', recipe=recipe)

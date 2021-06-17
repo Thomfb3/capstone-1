@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'includes/search.html' %}
+
+<div class="results-container" id="results-container">
+
+    {% if results|length > 0 %}
+    <div class="mb-2">
+        <p class="border-bottom">Search Results 1 - {{ results|length }}</p>
+    </div>
+    {% endif %}
+
+    {% for res in results %}
+    <a href="#login">
+        <div class="card results-card">
+            <div class="row g-0">
+
+                <div class="col-md-2">
+                    <img src="{{res.image}}" alt="{{res.title}}" class="img-fluid results-img">
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <h4 class="card-title">{{res.title}}</h4>
+                        <p>See Recipe</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </a>
+
+    {% endfor %}
+
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'includes/search.html' %}
+
+<div class="results-container" id="results-container">
+
+<p>{{recipe}}</p>
+        <div class="card results-card">
+            <div class="row g-0">
+
+                <div class="col-md-2">
+                    <img src="{{recipe.image}}" alt="{{recipe.title}}" class="img-fluid results-img">
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <h4 class="card-title">{{recipe.title}}</h4>
+                        <p>See Recipe</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+</div>
+{% endblock %}

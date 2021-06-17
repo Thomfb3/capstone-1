@@ -2,9 +2,11 @@
 
 {% block content %}
 
-{% include 'search.html' %}
-<h1>User Home</h1>
+{% include 'includes/search.html' %}
+
 <div class="container">
+
+<h1>User Home</h1>
     <div class="row">
         {% for res in results %}
         <div>
@@ -15,6 +17,6 @@
     </div>
 
 </div>
-<div class="container-fluid bg-dark">
+
 
 {% endblock %}
