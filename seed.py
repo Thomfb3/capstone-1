@@ -1,4 +1,5 @@
 from models import db, User, UserRecipes, MealTime, Permissions
+from app import app
 
 db.drop_all()
 db.create_all()
