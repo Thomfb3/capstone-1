@@ -16,6 +16,7 @@ class UserEditForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
     image_url = StringField('(Optional) Image URL')
+    password = PasswordField('Password', validators=[Length(min=6)])
 
 
 

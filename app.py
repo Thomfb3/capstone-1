@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 # Get DB_URI from environ variable (useful for production/testing) or,
 # if not set there, use development local db.
-app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///recipe_app')).replace("://", "ql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgres:///recipe_app')).replace("://", "ql://", 1)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
@@ -30,7 +30,7 @@ connect_db(app)
 API_KEY = "ac7991b98f02431da8a378c8d61af292"
 
 API_SEARCH_BASE = "https://api.spoonacular.com/recipes/complexSearch"
-API_RECIPE_BASE = "https://api.spoonacular.com/recipes/"
+
 SEARCH_RESULTS = "10"
 
 ##############################################################################
@@ -88,16 +88,15 @@ def signup():
 
         except IntegrityError as e:
             flash("Username already taken", 'danger')
-            return render_template('home.html', signup_form=signup_form, login_form=login_form)
+            return render_template('no_user/no_user_home.html', signup_form=signup_form, login_form=login_form)
 
         do_login(user)
         flash(f"Hello, {user.first_name}!", "success")
 
-        return redirect("/user_home")
+        return redirect("/home")
 
     else:
         return redirect('/')
-
 
 
 
@@ -112,7 +111,7 @@ def login():
         if user:
             do_login(user)
             flash(f"Hello, {user.first_name}!", "success")
-            return redirect("/user_home")
+            return redirect("/home")
     
     flash("Invalid credentials.", 'danger')
     return redirect("/") 
@@ -133,21 +132,21 @@ def logout():
 # General routes
 
 @app.route('/')
-def homepage_search():
-    """Show homepage """
+def homepage():
+    """Homepage view with simple search bar and login/signup forms"""
     if g.user:
-        return redirect("/user_home")
+        return redirect("/home")
 
     signup_form = UserSignupForm()
     login_form = UserLoginForm()
 
-    return render_template('home.html', signup_form=signup_form, login_form=login_form)
+    return render_template('no_user/no_user_home.html', signup_form=signup_form, login_form=login_form)
 
 
 
 @app.route('/results')
 def homepage_search_results():
-    """Show homepage """
+    """Show List of search results from recipe search"""
 
     signup_form = UserSignupForm()
     login_form = UserLoginForm()
@@ -161,25 +160,37 @@ def homepage_search_results():
     res = response.json()['results']
 
     if g.user:
-        return render_template('includes/user_results.html', results=res)
+        return render_template('user/search_results.html', results=res)
 
-    return render_template('includes/results.html', results=res, signup_form=signup_form, login_form=login_form)
+    return render_template('no_user/no_user_search_results.html', results=res, signup_form=signup_form, login_form=login_form)
 
 
 
-@app.route('/user_home')
-def user_homepage_search():
+@app.route('/home')
+def home_logged_om():
+    """Homepage view for logged-in user"""
     if not g.user:
         return redirect("/")
+
+    converted_user_recipes_list = [str(recipe_id) for recipe_id in g.user.user_recipe_ids]
+    user_recipe_ids_string = ",".join(converted_user_recipes_list)
+
+
     
-    return render_template('user_home.html')
+    params={"apiKey": API_KEY, "ids": user_recipe_ids_string, "includeNutrition" : "false"}
+
+    response = requests.get(f"https://api.spoonacular.com/recipes/informationBulk",  params=params)
+
+    recipes = response.json()
+    
+    return render_template('user/home.html', recipes=recipes)
 
 
 
 
 @app.route('/recipe/<int:recipe_id>')
 def show_recipe_information(recipe_id):
-    """Show homepage """
+    """Show recipe information"""
     if not g.user:
         return redirect("/")
 
@@ -189,4 +200,53 @@ def show_recipe_information(recipe_id):
 
     recipe = response.json()
 
-    return render_template('includes/recipe.html', recipe=recipe)
+    return render_template('user/recipe_details.html', recipe=recipe)
+
+
+
+
+@app.route('/save_recipe/<int:recipe_id>', methods=["POST"])
+def save_user_recipe(recipe_id):
+    """Save recipe to user recipes"""
+    save_recipe = UserRecipes(user_id=g.user.id, recipe_id=recipe_id)
+
+    db.session.add(save_recipe)
+    db.session.commit()
+
+    return redirect(f"/recipe/{recipe_id}")
+
+
+
+@app.route('/profile', methods=["GET", "POST"])
+def user_profile():
+    """Show User profile information"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    user = User.query.get_or_404(g.user.id)
+    edit_user_form = UserEditForm(obj=user)
+
+    if edit_user_form.validate_on_submit():
+        user.username = edit_user_form.username.data
+        user.first_name = edit_user_form.first_name.data
+        user.image_url = edit_user_form.image_url.data
+        password = edit_user_form.password.data
+
+        # authenticate will return a user or False
+        user = User.authenticate(user.username, password)
+
+        if not user: 
+            flash("Password Incorrect.", "danger")
+            return redirect('/profile')
+        else:
+            
+            db.session.add(user)
+            db.session.commit()
+
+            flash("Profile Updated.", "success")
+            return redirect('/home')
+
+    return render_template('user/profile.html', edit_user_form=edit_user_form, user=user)
+
+

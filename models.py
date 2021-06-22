@@ -47,11 +47,18 @@ class User(db.Model):
         default=1,
     )
 
+    recipes = db.relationship("UserRecipes")
 
+    
+    @property
+    def user_recipe_ids(self):
+        """ """
+        user_recipe_ids = [recipe.recipe_id for recipe in self.recipes]
+        return user_recipe_ids
 
 
     def __repr__(self):
-        return f"<User #{self.id}: {self.username}, {self.first_name}. {self.permissions}>"
+        return f"<User #{self.id}: Username={self.username}, Firstname={self.first_name}, Image_URL={self.image_url}, Permissions={self.permissions}>"
 
 
     @classmethod
@@ -112,6 +119,10 @@ class UserRecipes(db.Model):
         db.Integer,
         nullable=False,
     )
+
+    def __repr__(self):
+        return f"<UserRecipes #{self.id}, user_id={self.user_id}, recipe_id={self.recipe_id}>"
+
 
 
 
