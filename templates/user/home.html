@@ -6,7 +6,6 @@
 
 <div class="container">
 
-<h1>Saved Recipes</h1>
     <div class="row">
         {% for res in results %}
         <div>
@@ -17,6 +16,9 @@
     </div>
 
 
+    {% if recipes|length > 0 %}
+
+    <h1>Saved Recipes</h1>
 
     {% for recipe in recipes %}
     <a href="/recipe/{{ recipe.id }}">
@@ -38,6 +40,7 @@
     </a>
     
     {% endfor %}
+    {% endif %}
 
 
 

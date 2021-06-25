@@ -1,3 +1,11 @@
+:root {
+    --primary: #1e90ff;
+    --white: #ffffff;
+    --gray: #999999;
+    --darkgray: #6d6d6d;
+    --tooltip: rgb(0, 172, 126);
+  }
+
 html,
 body {
  height: 100%;
@@ -20,7 +28,16 @@ body {
     bottom: 0;
 }
 
+.profile-username {
+    color: var(--darkgray);
+    font-size: 12px;
+    padding-right: 13px;
+    margin-top: 15px;
+}
 
+.profile-group:hover {
+    cursor: pointer;
+}
 
 .card {
     border: none;
@@ -58,4 +75,16 @@ body {
 .results-container a {
     color: #212529;
     text-decoration: none;
+}
+
+
+.tooltip-inner {
+    background-color: var(--tooltip);
+}
+
+
+.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before,.bs-tooltip-top .tooltip-arrow::before {
+    top: -1px;
+    border-width: .4rem .4rem 0;
+    border-top-color: var(--tooltip);
 }

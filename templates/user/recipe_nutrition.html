@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'includes/search.html' %}
+
+<div class="recipe-container container" id="recipe-container">
+
+    <div class="row">
+        <div class="col-lg-1 offset-3">
+            <p>carbs: <span id="carbs">{{nutrition.carbs}}</span></p>
+            <p>protein: <span id="protein">{{nutrition.protein}}</span></p>
+            <p>fat: <span id="fat">{{nutrition.fat}}</span></p>
+        </div>
+        <div class="col-lg-6 ">
+            <canvas id="nutritionChart" width=""></canvas>
+        </div>
+    </div>
+
+    {% if nutrition.calories[-1] == "k" %}
+    <p>calories: <span id="calories">{{ nutrition.calories[:-1]}}</span></p>
+    {% else %}
+    <p>calories: <span id="calories">{{nutrition.calories}}</span></p>
+    {% endif %}
+
+    <div class="px-2">-----------------------------------</div>
+
+
+    {% for nutrient in  nutrition.bad %}
+
+    <p>{{nutrient.title}} : {{nutrient.amount}} | {{nutrient.percentOfDailyNeeds}}% </p>
+
+    {% endfor %}
+
+    <div class="px-2">-----------------------------------</div>
+    {% for nutrient in  nutrition.good %}
+
+    <p>{{nutrient.title}} : {{nutrient.amount}} | {{nutrient.percentOfDailyNeeds}}% </p>
+
+    {% endfor %}
+
+</div>
+{% endblock %}

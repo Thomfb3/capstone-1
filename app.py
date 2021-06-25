@@ -1,5 +1,6 @@
 import os
 import requests
+import math
 
 from flask import Flask, render_template, request, flash, redirect, session, g, abort
 from flask_debugtoolbar import DebugToolbarExtension
@@ -200,7 +201,9 @@ def show_recipe_information(recipe_id):
 
     recipe = response.json()
 
-    return render_template('user/recipe_details.html', recipe=recipe)
+    user_recipes = g.user.recipes
+
+    return render_template('user/recipe_details.html', recipe=recipe, user_recipes=user_recipes)
 
 
 
@@ -208,12 +211,70 @@ def show_recipe_information(recipe_id):
 @app.route('/save_recipe/<int:recipe_id>', methods=["POST"])
 def save_user_recipe(recipe_id):
     """Save recipe to user recipes"""
-    save_recipe = UserRecipes(user_id=g.user.id, recipe_id=recipe_id)
+    if recipe_id in g.user.user_recipe_ids:
+        flash("That's weird, you have that recipe saved already.", "warning")
+        return redirect(f"/recipe/{recipe_id}")
 
-    db.session.add(save_recipe)
+    saved_recipe = UserRecipes(user_id=g.user.id, recipe_id=recipe_id)
+
+    db.session.add(saved_recipe)
     db.session.commit()
 
     return redirect(f"/recipe/{recipe_id}")
+
+
+
+@app.route('/remove_recipe/<int:recipe_id>', methods=["POST"])
+def remove_user_recipe(recipe_id):
+    """Delete recipe from user recipes"""
+
+    recipe_to_remove = [recipe for recipe in g.user.recipes if recipe.recipe_id == recipe_id]
+
+    if len(recipe_to_remove) > 1:
+        flash("Something went wrong.", "danger")
+        return redirect(f"/recipe/{recipe_id}")
+
+    UserRecipes.query.filter(UserRecipes.id == recipe_to_remove[0].id).delete()
+
+    db.session.commit()
+
+    return redirect(f"/recipe/{recipe_id}")
+
+
+
+
+@app.route('/recipe/<int:recipe_id>/nutrition')
+def show_recipe_nutrition(recipe_id):
+    """Show recipe nutrition"""
+    if not g.user:
+        return redirect("/")
+
+    params={"apiKey": API_KEY}
+
+    response = requests.get(f"https://api.spoonacular.com/recipes/{recipe_id}/nutritionWidget.json",  params=params)
+
+    nutrition = response.json()
+
+
+    return render_template('user/recipe_nutrition.html', nutrition=nutrition)
+
+
+
+@app.route('/recipe/<int:recipe_id>/price')
+def show_recipe_price(recipe_id):
+    """Show recipe price breakdown"""
+    if not g.user:
+        return redirect("/")
+
+    params={"apiKey": API_KEY}
+
+    response = requests.get(f"https://api.spoonacular.com/recipes/{recipe_id}/priceBreakdownWidget.json",  params=params)
+
+    price = response.json()
+
+    price_format = "{dollar:.2f}"
+    
+    return render_template('user/recipe_price.html', price=price, round=round, price_format=price_format)
 
 
 

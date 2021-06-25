@@ -10,6 +10,7 @@
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="/static/app.css">
+  <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
   <!-- <link rel="shortcut icon" href="/static/favicon.ico"> -->
 </head>
 
@@ -33,27 +34,29 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
               <ul class="navbar-nav">
-                <!-- <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Features</a>
-                    </li> -->
-
 
                 {% if g.user %}
-                <!--Logout-->                
-                <li class="nav-item">
-                  <a href="/profile" class="">My Profile</a>
-                </li>
-                <li class="nav-item">
-                  <a href="/logout" type="button" class="btn btn-primary">Logout</a>
-                </li>
+
+                <div class="btn-group align-items-center">
+                  <div class="d-flex align-items-center profile-group" data-bs-toggle="dropdown" aria-expanded="false">
+                    <p class="profile-username">{{g.user.username}}</p>
+                    <img src="{{g.user.image_url}}" class="rounded-circle profile-image" width="45px"
+                      alt="profile image">
+                  </div>
+
+                  <ul class="dropdown-menu dropdown-menu-end">
+
+                    <li><a href="/profile" class="dropdown-item">My Profile</a></li>
+                    <li> <a href="/logout" type="button" class="dropdown-item">Logout</a></li>
+                  </ul>
+                </div>
+
                 {% else %}
 
                 <!-- Login/Signup Buttons -->
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-primary mx-2" data-bs-toggle="modal" data-bs-target="#login">
+                <button type="button" class="btn btn-outline-primary mx-2" data-bs-toggle="modal"
+                  data-bs-target="#login">
                   Login
                 </button>
 
@@ -61,17 +64,10 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login">
                   Sign Up
                 </button>
-                <!-- <li class="nav-item mx-2">
-                  <a href="/login_signup" type="button" class="btn btn-outline-primary">Login</a>
-                </li>
-
-                <li class="nav-item">
-                  <a href="/login_signup" type="button" class="btn btn-primary">Sign Up</a>
-                </li> -->
 
 
                 <!-- Login Modal -->
-                <div class="modal fade" id="login"  data-bs-keyboard="false" tabindex="-1"
+                <div class="modal fade" id="login" data-bs-keyboard="false" tabindex="-1"
                   aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
@@ -117,13 +113,8 @@
     </div>
 
 
-
-
     {% block content %}
     {% endblock %}
-
-
-
 
 
     <footer class="footer">
@@ -131,18 +122,23 @@
       <p class="p-3">Copyright 2021</p>
 
     </footer>
-  </div><!--END of Main Container-->
+  </div>
+  <!--END of Main Container-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
   <script src="/static/app.js"></script>
-
+  <script src="/static/recipeCharts.js"></script>
 
 
 </body>
 
 </html>
+
+
+

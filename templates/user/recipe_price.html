@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'includes/search.html' %}
+
+<div class="recipe-container container" id="recipe-container">
+    <div class="row">
+
+    <div class="col-lg-1 offset-3">
+        <p>Total: ${{ price_format.format(dollar=round(price.totalCost)/100) }}</p>
+        <p>Cost per serving: ${{ price_format.format(dollar=round(price.totalCostPerServing)/100) }}</p>
+    </div>
+    <div class="col-lg-6 ">
+        <canvas id="priceChart" width=""></canvas>
+    </div>
+
+</div>
+    <div class="px-2">-----------------------------------</div>
+ 
+    {% for ingredient in  price.ingredients %}
+
+    <p> <span class="ingredient-name">{{ ingredient.name }}</span></p>
+    <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" width="50px"
+    alt="{{ ingredient.image }}">
+
+    <p>Price: $<span class="ingredient-price">{{ price_format.format(dollar = round(ingredient.price)/100) }}</span></p>
+    {% endfor %}
+ 
+
+</div>
+{% endblock %}

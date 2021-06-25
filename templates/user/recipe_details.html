@@ -4,30 +4,57 @@
 {% include 'includes/search.html' %}
 
 <div class="recipe-container container" id="recipe-container">
-    <button class="btn btn-primary favorite_button" data-id="{{recipe.id}}">Add to Favorites</button>
+    <!-- <button class="btn btn-primary favorite_button" data-id="{{recipe.id}}">Add to Favorites</button> -->
+
     {% if recipe.id in g.user.user_recipe_ids %}
 
-    <i class="fas fa-star"></i>
+    <div class="container">
+        <i class="fas fa-star remove_favorite_button" type="button" data-id="{{recipe.id}}" data-bs-toggle="tooltip"
+            data-bs-placement="top" title="Remove from Favorites"></i>
+    </div>
     {% else %}
-    <i class="far fa-star"></i>
+    <div class="container">
+        <i class="far fa-star make_favorite_button" data-id="{{recipe.id}}" data-bs-toggle="tooltip"
+            data-bs-placement="top" title="Save to Favorites"></i>
+    </div>
     {% endif %}
-    <p>{{recipe}}</p>
-        <div class="card results-card">
-            <div class="row g-0">
 
-                <div class="col-md-2">
-                    <img src="{{recipe.image}}" alt="{{recipe.title}}" class="img-fluid results-img">
-                </div>
-                <div class="col-md-10">
-                    <div class="card-body">
-                        <h4 class="card-title">{{recipe.title}}</h4>
-                        <p>See Recipe</p>
-                    </div>
-                </div>
+    <a href="/recipe/{{recipe.id}}/nutrition" class="btn btn-primary" >See Nutrition</a>
+    <a href="/recipe/{{recipe.id}}/price" class="btn btn-primary" >See Price Breakdown</a>
 
-            </div>
-        </div>
 
+    <h1>{{ recipe.title }}</h1>
+    <img src="{{ recipe.image }}" width="300px" alt="{{ recipe.title }}">
+    <p>ready in minutes: {{recipe.readyInMinutes}}</p>
+    <p>summary: {{recipe.summary}}</p>
+    <div class="px-2">-----------------------------------</div>
+    <p>vegetarian: {{recipe.vegetarian}}</p>
+    <p>vegan: {{recipe.vegan}}</p>
+    <p>glutenFree: {{recipe.glutenFree}}</p>
+    <p>veryHealthy: {{recipe.veryHealthy}}</p>
+    <p>cheap: {{recipe.cheap}}</p>
+    <p>veryPopular: {{recipe.veryPopular}}</p>
+    <p>sustainable: {{recipe.sustainable}}</p>
+    <p>weightWatcherSmartPoints: {{recipe.weightWatcherSmartPoints}}</p>
+    <div class="px-2">-----------------------------------</div>
+
+    <h1>Ingredients</h1>
+    {% for ingredient in recipe.extendedIngredients %}
+    <p class="pt-2 ">{{ ingredient.name }}</p>
+    <p><span class="ingredient-decimal">{{ ingredient.measures.us.amount }}</span>  {{ ingredient.measures.us.unitShort }}</p>
+    <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" width="50px"
+        alt="{{ ingredient.image }}">
+    <div class="px-2">-----------------</div>
+    
+    {% endfor %}
+
+    <div class="px-2">-----------------------------------</div>
+
+    <h1>Steps</h1>
+    {% for step in recipe.analyzedInstructions[0].steps %}
+    <h3>{{ step.number }}</h3>
+    <p>{{ step.step }}</p>
+    {% endfor %}
 
 
 </div>
