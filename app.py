@@ -255,8 +255,8 @@ def show_recipe_nutrition(recipe_id):
 
     nutrition = response.json()
 
+    return render_template('user/recipe_nutrition.html', nutrition=nutrition, recipe_id=recipe_id)
 
-    return render_template('user/recipe_nutrition.html', nutrition=nutrition)
 
 
 
@@ -274,7 +274,8 @@ def show_recipe_price(recipe_id):
 
     price_format = "{dollar:.2f}"
     
-    return render_template('user/recipe_price.html', price=price, round=round, price_format=price_format)
+    return render_template('user/recipe_price.html', recipe_id=recipe_id, price=price, round=round, price_format=price_format)
+
 
 
 
