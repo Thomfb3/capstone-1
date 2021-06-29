@@ -40,7 +40,7 @@ if (proteinEl) {
 let ingredientNames = document.querySelectorAll(".ingredient-name");
 let ingredientPrices = document.querySelectorAll(".ingredient-price");
 
-if (ingredientNames) {
+if (ingredientNames.length > 0) {
 
     let ingredientNamesArr = [];
     let ingredientPricesArr = [];

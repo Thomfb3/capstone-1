@@ -1,15 +1,19 @@
 :root {
-    --primary: #1e90ff;
+    --primary: #054bfe;
     --white: #ffffff;
     --gray: #999999;
     --darkgray: #6d6d6d;
     --tooltip: rgb(0, 172, 126);
+    --logo-font: 'Calistoga', cursive;
+    --common-font: 'Montserrat', sans-serif;
   }
+
 
 html,
 body {
  height: 100%;
  position: relative;
+ font-family: var(--common-font);
 }
 
 .main-container {
@@ -28,6 +32,71 @@ body {
     bottom: 0;
 }
 
+.logo {
+    font-family: var(--logo-font);
+    color: var(--primary);
+    font-size: 32px;
+}
+
+.search {
+    padding: 40px;
+    border-radius: 100px;
+    box-shadow: 0px 10px 50px rgba(46, 50, 79, 0.3);
+    width: 70%;
+    font-size: 24px;
+}
+
+.search-bar {
+    border-radius: 100px;
+}
+
+.search-icon {
+    color: var(--primary);
+    font-size: 24px;
+}
+
+#search-button {
+    margin-right: -15px;
+    z-index: 1;
+    margin-top: 3px;
+}
+
+#search {
+    border-radius: 100px;
+    padding: 10px;
+    padding-left: 50px;
+    margin-left: -37px;
+
+}
+
+
+.content-block-1 {
+    position: relative;
+    margin-top: 30px;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("/static/images/people-eating-1-min.jpg");
+    background-size: cover;
+    background-position: center;
+    clip-path: polygon(0 15%, 100% 0%, 100% 85%, 0% 100%);
+
+}
+
+
+.content-block-1::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    height: 50vh;
+    background-color: rgba(0,0,0,0.5);
+
+}
 .profile-username {
     color: var(--darkgray);
     font-size: 12px;
@@ -87,4 +156,18 @@ body {
     top: -1px;
     border-width: .4rem .4rem 0;
     border-top-color: var(--tooltip);
+}
+
+
+.btn {
+    border-radius: 100px;
+}
+.btn-primary {
+    background-color: var(--primary);
+}
+
+.modal-header {
+
+border: 0px solid #fff;
+
 }
