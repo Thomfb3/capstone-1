@@ -59,12 +59,12 @@
                 <!-- Login/Signup Buttons -->
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-outline-primary mx-2" data-bs-toggle="modal"
-                  data-bs-target="#login">
+                  data-bs-target="#login" id="header-login-btn">
                   Login
                 </button>
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login" id="header-signup-btn">
                   Sign Up
                 </button>
 
@@ -72,13 +72,11 @@
                 <!-- Login Modal -->
                 <div class="modal fade" id="login" data-bs-keyboard="false" tabindex="-1"
                   aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <!-- <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5> -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body ">
+                     
+                      <div class="modal-body">
 
                         {% include 'includes/login_signup.html' %}
 
@@ -118,8 +116,8 @@
 
 
     <footer class="footer">
-
-      <p class="p-3">Copyright 2021</p>
+      <p class="footer-logo text-center">chowtime</p>
+      <p class="footer-copyright">&copy; 2021 chowtime, All rights reserved.</p>
 
     </footer>
   </div>

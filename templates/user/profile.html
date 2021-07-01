@@ -4,18 +4,18 @@
 
 
 <div class="container" id="">
-
+    <p>Profile Pic:</p>
     <img src="{{user.image_url}}" class="circle float-start" alt="profile image">
-
-    <h3>{{user.first_name}}</h3>
+    <p>Username:</p>
     <h3>{{user.username}}</h3>
+    <p>First Name:</p>
+    <h3>{{user.first_name}}</h3>
+
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_user">
         Edit User
     </button>
 </div>
-
-
 
 
 <!-- Edit User Modal -->
@@ -24,7 +24,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Edit User Form</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body  ">
@@ -34,10 +34,7 @@
 
 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
-            </div>
+         
         </div>
     </div>
 </div>

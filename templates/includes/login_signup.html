@@ -1,6 +1,4 @@
-
-
-<div class="row">
+<!-- <div class="row">
 
     <div class="col-6 border">
         <div class="row justify-content-md-center">
@@ -44,5 +42,73 @@
             </div>
         </div>
     </div>
-</div>
 
+</div> -->
+
+
+
+<div class="modal-inner ">
+
+    <div class="d-flex flex-row align-items-center justify-content-between">
+
+        <div id="signup-form" class="modal-form">
+            <h3 class="form-header mb-3">Create Account</h3>
+            <form action="/signup" method="POST" id="user_form">
+                {{ signup_form.hidden_tag() }}
+
+                {% for field in signup_form if field.widget.input_type != 'hidden' %}
+
+                {% for error in field.errors %}
+                <span class="text-danger signup-input-error">{{ error }}</span>
+                {% endfor %}
+                {{ field(placeholder=field.label.text, class="form-control mb-3") }}
+                {% endfor %}
+
+                <button class="btn btn-primary btn-lg btn-form">Sign up!</button>
+            </form>
+        </div>
+
+
+        <div id="login-form" class="modal-form">
+            <h3 class="form-header mb-3">Login</h3>
+            <form action="/login" method="POST" id="user_form">
+                {{ login_form.hidden_tag() }}
+
+                {% for field in login_form if field.widget.input_type != 'hidden' %}
+
+                {% for error in field.errors %}
+                <span class="text-danger login-input-error">{{ error }}</span>
+                {% endfor %}
+
+                {{ field(placeholder=field.label.text, class="form-control mb-3") }}
+                {% endfor %}
+
+                <button class="btn btn-primary btn-lg btn-form">Login</button>
+            </form>
+        </div>
+
+    </div>
+
+
+
+    <div class="login-message-background align-self-stretch" id="login-message-background">
+
+    </div>
+
+    <div class="login-message" id="login-message">
+        <h2>Welcome Back!</h2>
+        <p>If you don't have an account, please create an account instead.</p>
+        <button id="modal-signup-btn" type="button" class="btn btn-outline-light btn-form-switch">Sign up</button>
+        <i class="fas fa-hamburger form-icon-left"></i>
+    </div>
+
+    <div class="signup-message message-switch" id="signup-message">
+            <h2>Hello there!</h2>
+            <p>If you have an account, please login instead.</p>
+            <button id="modal-login-btn" type="button" class="btn btn-outline-light btn-form-switch">Login</button>
+            <i class="fas fa-pizza-slice form-icon-right"></i>
+    </div>
+    
+
+
+</div>
