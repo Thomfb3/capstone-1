@@ -18,6 +18,8 @@
 
     {% if recipes|length > 0 %}
 
+    {{recipes}}
+
     <h1>Saved Recipes</h1>
 
     {% for recipe in recipes %}
@@ -40,6 +42,11 @@
     </a>
     
     {% endfor %}
+
+    {% else %}
+    <h3>No Saved Recipes yet!</h3>
+
+
     {% endif %}
 
 

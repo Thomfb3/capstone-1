@@ -51,7 +51,6 @@ def add_user_to_g():
 
 def do_login(user):
     """Log in user."""
-
     session[CURR_USER_KEY] = user.id
 
 
@@ -75,6 +74,7 @@ def signup():
         del session[CURR_USER_KEY]
 
     signup_form = UserSignupForm()
+    login_form = UserLoginForm()
 
 
     if signup_form.validate_on_submit():
@@ -88,7 +88,7 @@ def signup():
             db.session.commit()
 
         except IntegrityError as e:
-            flash("Username already taken", 'danger')
+            flash("Username already taken", 'danger signup-form-error')
             return render_template('no_user/no_user_home.html', signup_form=signup_form, login_form=login_form)
 
         do_login(user)
@@ -97,6 +97,7 @@ def signup():
         return redirect("/home")
 
     else:
+        flash("That didn't work.", 'danger signup-form-error')
         return redirect('/')
 
 
@@ -114,7 +115,7 @@ def login():
             flash(f"Hello, {user.first_name}!", "success")
             return redirect("/home")
     
-    flash("Invalid credentials.", 'danger')
+    flash("Invalid credentials.", 'danger login-form-error')
     return redirect("/") 
 
 
@@ -172,19 +173,25 @@ def home_logged_om():
     """Homepage view for logged-in user"""
     if not g.user:
         return redirect("/")
-
-    converted_user_recipes_list = [str(recipe_id) for recipe_id in g.user.user_recipe_ids]
-    user_recipe_ids_string = ",".join(converted_user_recipes_list)
-
-
     
-    params={"apiKey": API_KEY, "ids": user_recipe_ids_string, "includeNutrition" : "false"}
+    if len(g.user.user_recipe_ids) > 0:
 
-    response = requests.get(f"https://api.spoonacular.com/recipes/informationBulk",  params=params)
+        converted_user_recipes_list = [str(recipe_id) for recipe_id in g.user.user_recipe_ids]
+        user_recipe_ids_string = ",".join(converted_user_recipes_list)
 
-    recipes = response.json()
+        params={"apiKey": API_KEY, "ids": user_recipe_ids_string, "includeNutrition" : "false"}
+
+        response = requests.get(f"https://api.spoonacular.com/recipes/informationBulk",  params=params)
+
+        recipes = response.json()
+        
+        return render_template('user/home.html', recipes=recipes)
     
-    return render_template('user/home.html', recipes=recipes)
+    else:
+
+        recipes = [];
+
+        return render_template('user/home.html', recipes=recipes)
 
 
 
@@ -278,10 +285,9 @@ def show_recipe_price(recipe_id):
 
 
 
-
 @app.route('/profile', methods=["GET", "POST"])
 def user_profile():
-    """Show User profile information"""
+    """Show User profile information"""   
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
@@ -290,25 +296,45 @@ def user_profile():
     edit_user_form = UserEditForm(obj=user)
 
     if edit_user_form.validate_on_submit():
-        user.username = edit_user_form.username.data
-        user.first_name = edit_user_form.first_name.data
-        user.image_url = edit_user_form.image_url.data
-        password = edit_user_form.password.data
-
         # authenticate will return a user or False
-        user = User.authenticate(user.username, password)
+        if User.authenticate(user.username, edit_user_form.password.data):
+        
+            try:
+                user.username = edit_user_form.username.data
+                user.first_name = edit_user_form.first_name.data
+                user.image_url = edit_user_form.image_url.data or "/static/images/default-pic.png"
+                password = edit_user_form.password.data
 
-        if not user: 
-            flash("Password Incorrect.", "danger")
-            return redirect('/profile')
-        else:
-            
-            db.session.add(user)
-            db.session.commit()
+                db.session.add(user)
+                db.session.commit()
 
+            except IntegrityError as e:
+                db.session.rollback()
+                flash("Username already taken", 'danger edit-form-error')
+
+                return render_template('user/profile.html', edit_user_form=edit_user_form, user=user)
+
+        
             flash("Profile Updated.", "success")
-            return redirect('/home')
+            return redirect('/profile')
+        
+        flash("Incorrect Password.", 'danger edit-form-error')
+        return redirect('/profile')
 
     return render_template('user/profile.html', edit_user_form=edit_user_form, user=user)
+
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """404 NOT FOUND page."""
+
+    return render_template('misc/404.html'), 404
+
+
+
+
+
+
 
 

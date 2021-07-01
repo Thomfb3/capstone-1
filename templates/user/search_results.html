@@ -9,6 +9,13 @@
     <div class="mb-2">
         <p class="border-bottom">Search Results 1 - {{ results|length }}</p>
     </div>
+    {% else %}
+    <div class="mb-2">
+        <h4 class="border-bottom pb-1">Sorry, no results found.</h4>
+        <div class="text-center">
+            <i class="far fa-frown no-results-frown"></i>
+        </div>
+    </div>
     {% endif %}
 
     {% for res in results %}
