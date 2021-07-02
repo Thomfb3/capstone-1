@@ -1,8 +1,80 @@
+//Toggle Login/Signup modal styles
+$("#modal-login-btn").on("click", toggleModalStyles);
+$("#modal-signup-btn").on("click", toggleModalStyles);
+
+
+function toggleModalStyles() {
+    $("#login-message").toggleClass("message-switch");
+    $("#signup-message").toggleClass("message-switch");
+    $("#login-message-background").toggleClass("move-right");
+}
+
+
+
+$("#header-login-btn").on("click", function loginToggleModalStyles() {
+    if ($("#login-message").hasClass("message-switch")) {
+        toggleModalStyles();
+    }
+});
+
+
+$("#header-signup-btn").on("click", function signupToggleModalStyles() {
+    if ($("#signup-message").hasClass("message-switch")) {
+        toggleModalStyles();
+    }
+});
+
+
+
+$(document).ready(function() {
+    const signupFormErrors = document.querySelectorAll(".signup-form-error");    
+    const signupInputErrors = document.querySelectorAll(".signup-input-error");    
+
+    if (signupFormErrors.length > 0) {
+        errors = signupFormErrors[0].innerText;
+        signupFormErrors[0].innerHTML = "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+        signupFormErrors[0].innerHTML += errors;
+    }
+
+
+    if (signupFormErrors.length > 0 || signupInputErrors.length > 0) {
+        $('#login').modal('show');
+        toggleModalStyles();
+    }
+
+    const loginFormErrors = document.querySelectorAll(".login-form-error");    
+    const loginInputErrors = document.querySelectorAll(".login-input-error");    
+
+    if (loginFormErrors.length > 0 || loginInputErrors.length > 0) {
+        $('#login').modal('show');
+    }
+
+    if (loginFormErrors.length > 0) {
+        errors = loginFormErrors[0].innerText;
+        loginFormErrors[0].innerHTML = "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+        loginFormErrors[0].innerHTML += errors;
+    }
+
+});
+
+
+$(document).ready(function() {
+    const editFormErrors = document.querySelectorAll(".edit-form-error");    
+    const editInputErrors = document.querySelectorAll(".edit-input-error");    
+
+    if (editFormErrors.length > 0 || editInputErrors.length > 0) {
+        $('#edit_user').modal('show');
+    }
+});
+
 
 //Show modal when clicking recipe search results if user is not logged in
 $("#results-container a").click(function () {
     $("#login").modal('show');
 })
+
+
+
 
 
 async function addRecipeToFavorites(evt) {
@@ -34,37 +106,11 @@ function handleSavedRecipeUiToggle(target) {
 }
 
 
-$(document).ready(function() {
-    const editFormErrors = document.querySelectorAll(".edit-form-error");    
-    const editInputErrors = document.querySelectorAll(".edit-input-error");    
-
-    if (editFormErrors.length > 0 || editInputErrors.length > 0) {
-        $('#edit_user').modal('show');
-    }
-});
-
-
-$(document).ready(function() {
-    const signupFormErrors = document.querySelectorAll(".signup-form-error");    
-    const signupInputErrors = document.querySelectorAll(".signup-input-error");    
-
-    if (signupFormErrors.length > 0 || signupInputErrors.length > 0) {
-        $('#login').modal('show');
-    }
-
-    const loginFormErrors = document.querySelectorAll(".login-form-error");    
-    const loginInputErrors = document.querySelectorAll(".login-input-error");    
-
-    if (loginFormErrors.length > 0 || loginInputErrors.length > 0) {
-        $('#login').modal('show');
-    }
-});
-
-
-
-
 //Event listener Adding recipe to favorites
 $("#recipe-container").on("click", addRecipeToFavorites);
+
+
+
 
 
 //Bootstrap Tooltips
@@ -120,33 +166,6 @@ $(document).ready(function () {
 });
 
 
-
-
-//Toggle Login/Signup modal styles
-$("#modal-login-btn").on("click", toggleModalStyles);
-$("#modal-signup-btn").on("click", toggleModalStyles);
-
-
-function toggleModalStyles() {
-    $("#login-message").toggleClass("message-switch");
-    $("#signup-message").toggleClass("message-switch");
-    $("#login-message-background").toggleClass("move-right");
-}
-
-
-
-$("#header-login-btn").on("click", function loginToggleModalStyles() {
-    if ($("#login-message").hasClass("message-switch")) {
-        toggleModalStyles();
-    }
-});
-
-
-$("#header-signup-btn").on("click", function signupToggleModalStyles() {
-    if ($("#signup-message").hasClass("message-switch")) {
-        toggleModalStyles();
-    }
-});
 
 
 

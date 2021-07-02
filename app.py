@@ -97,7 +97,22 @@ def signup():
         return redirect("/home")
 
     else:
-        flash("That didn't work.", 'danger signup-form-error')
+        fields=[field for field in signup_form]
+        errors = {}
+
+        for field in fields:
+            if field.errors:
+                errors[field.name] = field.errors
+        
+        error_message = "<i class='far fa-frown-open error-sad-icon'></i><span class='error-sad-title'>Dang it! It didn't work...</span>"
+
+        for name, error in errors.items():
+            error_message += f"<p><b>*</b> {name} : {error[0]}</p>"
+
+
+
+        flash(f"{error_message}", 'danger signup-form-error')
+      
         return redirect('/')
 
 
@@ -115,7 +130,8 @@ def login():
             flash(f"Hello, {user.first_name}!", "success")
             return redirect("/home")
     
-    flash("Invalid credentials.", 'danger login-form-error')
+    error_message = "<i class='far fa-grimace error-sad-icon'></i><span class='error-sad-title'>Invalid credentials!</span><p>Username or Password is incorrect."
+    flash(f"{error_message}", 'danger login-form-error')
     return redirect("/") 
 
 

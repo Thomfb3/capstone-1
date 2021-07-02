@@ -60,22 +60,22 @@
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-outline-primary mx-2" data-bs-toggle="modal"
                   data-bs-target="#login" id="header-login-btn">
-                  Login
+                  Signup
                 </button>
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login" id="header-signup-btn">
-                  Sign Up
+                <button type="button" class="btn btn-primary btn-lg btn-form" data-bs-toggle="modal" data-bs-target="#login" id="header-signup-btn">
+                  Login
                 </button>
 
 
                 <!-- Login Modal -->
                 <div class="modal fade" id="login" data-bs-keyboard="false" tabindex="-1"
                   aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 
                   <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
-                     
+                      <button type="button" class="btn-close login-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       <div class="modal-body">
 
                         {% include 'includes/login_signup.html' %}
@@ -100,7 +100,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container-fluid">
       {% for category, message in get_flashed_messages(with_categories=True) %}
       <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">{{ message }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

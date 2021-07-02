@@ -196,12 +196,36 @@ body {
 }
 
 
+.btn-header-signup {
+    color: #fff;
+    background: var(--white);
+    padding: 8px 25px 8px 25px;   
+    border: 2px solid var(--primary);
+    font-size: 1rem;
+}
+
+.btn-header-login {
+    background: var(--primary);
+    padding: 8px 25px 8px 25px;   
+    border: 2px solid var(--primary);
+    font-size: 1rem;
+}
+
+.btn-header-login:hover {
+    background: var(--white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 8px 40px 8px 40px;
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);  
+}
+
 .btn-form {
     background: var(--primary);
     padding: 8px 25px 8px 25px;   
     border: 2px solid var(--primary);
     font-size: 1rem;
 }
+
 
 .btn-form:hover {
     background: var(--white);
@@ -210,6 +234,17 @@ body {
     padding: 8px 40px 8px 40px;
     transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);  
 }
+
+.btn-form-switch {
+    padding: 8px 25px 8px 25px;
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);  
+}
+
+.btn-form-switch:hover {
+    color: var(--primary);
+    padding: 8px 40px 8px 40px;
+}
+
 
 .form-header {
     color: var(--primary);
@@ -242,22 +277,6 @@ body {
 
 .move-right {
     right: -395px;
-}
-
-/* .btn-close {
-    position: absolute;
-    right: 100%;
-    top: 0px;
-} */
-
-.btn-form-switch {
-    padding: 8px 25px 8px 25px;
-    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);  
-}
-
-.btn-form-switch:hover {
-    color: var(--primary);
-    padding: 8px 40px 8px 40px;
 }
 
 
@@ -305,6 +324,15 @@ body {
     box-shadow:  0px 0px 24px rgba(0,0,0,.2);
     overflow: hidden;
 }
+
+
+.login-modal-close {
+    position: absolute;
+    z-index: 10;
+    padding: 17px;
+    right: 0;
+}
+
 
 .modal-body {
     padding: 0px;
@@ -362,3 +390,28 @@ body {
     color: #d5e1ff;
 }
 
+.alert-danger {
+    color:  #f20038;
+    background-color: #ffc7d4;
+}
+
+.signup-form-error {
+    top: -100px;
+}
+.login-form-error  {
+    top: -100px;
+
+}
+.signup-form-error p {
+    margin: 5px;
+}
+
+.error-sad-icon {
+    font-size: 34px;
+}
+
+.error-sad-title {
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 10px;
+}
