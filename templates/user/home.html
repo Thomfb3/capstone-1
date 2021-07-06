@@ -4,54 +4,48 @@
 
 {% include 'includes/search.html' %}
 
-<div class="container">
-
-    <div class="row">
-        {% for res in results %}
-        <div>
-            <h1>{{res.title}}</h1>
-            <img src="{{res.image}}">
-        </div>
-        {% endfor %}
-    </div>
-
+<div class="results-container" id="results-container">
 
     {% if recipes|length > 0 %}
-
-    {{recipes}}
-
-    <h1>Saved Recipes</h1>
-
-    {% for recipe in recipes %}
-    <a href="/recipe/{{ recipe.id }}">
-        <div class="card results-card">
-            <div class="row g-0">
-
-                <div class="col-md-2">
-                    <img src="{{recipe.image}}" alt="{{recipe.title}}" class="img-fluid results-img">
-                </div>
-                <div class="col-md-10">
-                    <div class="card-body">
-                        <h4 class="card-title">{{recipe.title}}</h4>
-                        <p>See Recipe</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </a>
-    
-    {% endfor %}
-
+    <div class="p-3">
+        <p class="border-bottom p-2">Saved Recipes</p>
+    </div>
     {% else %}
-    <h3>No Saved Recipes yet!</h3>
-
-
+    <div class="mb-3 p-3">
+        <h4 class="border-bottom pb-1">No Saved Recipes yet.</h4>
+        <div class="text-center">
+            <i class="far fa-frown no-results-frown"></i>
+        </div>
+    </div>
     {% endif %}
 
 
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-3 g-4 ">
+     
+            {% for recipe in recipes %}
+         
+            <div class="col d-flex align-self-stretch mb-2 justify-content-center">
+                <a href="/recipe/{{ recipe.id }}" class="">
+                    <div class="card align-self-stretch " style="width: 18rem;">
+                        <div class="card-hide-overflow">
+                            <img src="{{recipe.image}}" class="card-img-top " alt="{{recipe.title}}">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ loop.index }}. {{recipe.title}}</h5>
+                            <a href="/recipe/{{ recipe.id }}" class="card-recipe-link">See recipe <span>&rarr;</span></a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!--END COL -->
+            {% endfor %}
+
+        </div>
+        <!--END ROW -->
+    </div>
+    <!--END CONTAINER -->
 
 </div>
-
 
 {% endblock %}

@@ -184,6 +184,29 @@ def homepage_search_results():
 
 
 
+@app.route('/results_by_ingredient/<ingredient>')
+def search_by_ingredient_results(ingredient):
+    """Show List of search results from recipe search"""
+
+    signup_form = UserSignupForm()
+    login_form = UserLoginForm()
+
+    # search = request.args.get('i')
+
+    params={"apiKey": API_KEY, "ingredients" : ingredient, "number": SEARCH_RESULTS}
+
+    response = requests.get("https://api.spoonacular.com/recipes/findByIngredients",  params=params)
+
+    res = response.json()
+
+    if g.user:
+        return render_template('user/search_results.html', results=res)
+
+    return render_template('no_user/no_user_search_results.html', results=res, signup_form=signup_form, login_form=login_form)
+
+
+
+
 @app.route('/home')
 def home_logged_om():
     """Homepage view for logged-in user"""

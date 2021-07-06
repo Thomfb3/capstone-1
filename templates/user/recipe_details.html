@@ -3,58 +3,134 @@
 
 {% include 'includes/search.html' %}
 
-<div class="recipe-container container" id="recipe-container">
-    <!-- <button class="btn btn-primary favorite_button" data-id="{{recipe.id}}">Add to Favorites</button> -->
+<div class="recipe-container container mb-3" id="recipe-container">
 
-    {% if recipe.id in g.user.user_recipe_ids %}
 
-    <div class="container">
-        <i class="fas fa-star remove_favorite_button" type="button" data-id="{{recipe.id}}" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Remove from Favorites"></i>
+    <div class="container border-bottom pb-5">
+        {% if recipe.id in g.user.user_recipe_ids %}
+        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="fas fa-star remove_favorite_button" type="button"
+                data-id="{{recipe.id}}" data-bs-toggle="tooltip" data-bs-placement="top"
+                title="Remove from Favorites"></i></h1>
+
+        {% else %}
+        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="far fa-star make_favorite_button" type="button"
+                data-id="{{recipe.id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Save to Favorites"></i>
+        </h1>
+
+        {% endif %}
+        <p>Ready in <b>{{recipe.readyInMinutes}}</b> minutes.</p>
+
+        <div class="recipe-main">
+            <div class="text-center">
+                {% if recipe.image %}
+                <img class="mb-3" src="{{ recipe.image }}" width="400px" alt="{{ recipe.title }}">
+                {% else %}
+                <img class="" src="../static/images/default-dinner.jpg" width="400px" alt="{{ recipe.title }}">
+                <p class="missing-image-message mb-0">Sorry... It seems we have misplaced the recipe image. <i
+                        class="far fa-frown"></i></p>
+                {% endif %}
+
+                <div class="recipe-info-btns text-center">
+                    <a href="/recipe/{{recipe.id}}/nutrition" class="btn btn-primary w-40"><i
+                            class="fas fa-chart-pie"></i> Nutrition</a>
+                    <a href="/recipe/{{recipe.id}}/price" class="btn btn-primary w-40"><i
+                            class="fas fa-dollar-sign"></i> Price Breakdown</a>
+                </div>
+
+
+            </div>
+            <div>
+                <p class="recipe-summary" id="summary">{{recipe.summary}}</p>
+
+                {% set recipe_types = { "vegetarian":recipe.vegetarian, "vegan":recipe.vegan,"glutenFree":recipe.glutenFree,"dairyFree":recipe.dairyFree, "veryHealthy":recipe.veryHealthy, "cheap":recipe.cheap,"veryPopular":recipe.veryPopular, "glutenFree":recipe.glutenFree, "sustainable":recipe.sustainable,  "weightWatcherSmartPoints":recipe.weightWatcherSmartPoints} %}
+
+
+                <div class="recipe-types-container d-flex mt-3 ps-5">
+
+                    {% for key, value in recipe_types.items() %}
+
+                    {% if value == True %}
+                    <div class="pe-3 text-center">
+                        <img class="" src="../static/images/icons/{{key}}.svg" width="50px" alt="{{ key }}">
+                        <p>{% if key == "dairyFree" %}
+                            dairy free
+                            {% elif key == "glutenFree" %}
+                            gluten free
+                            {% else %}
+                            {{key}}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                    {% elif key == "weightWatcherSmartPoints" %}
+
+                    <div class="pe-3 text-center">
+                        <img src="../static/images/icons/{{key}}.svg" width="50px" alt="{{ key }}">
+                        <p>{{ value }} Smart Points</p>
+                    </div>
+
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+
+
+            </div>
+        </div>
+
     </div>
-    {% else %}
-    <div class="container">
-        <i class="far fa-star make_favorite_button" data-id="{{recipe.id}}" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Save to Favorites"></i>
+
+
+    <div class="container border-bottom pb-5">
+        <div class="mt-5 mb-3 ">
+            <h3 class="recipe-header">Ingredients</h3>
+        </div>
+
+        <div class="row">
+            {% for ingredient in recipe.extendedIngredients %}
+
+            <div class="col-lg-2 d-flex flex-column align-items-center border p-2">
+
+                <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" class=""
+                    alt="{{ ingredient.name }}" width="50px">
+                <div class="">
+                    <p class="pb-1">{{ ingredient.name }}</p>
+                    <p class="ingredient-measurement"><span
+                            class="ingredient-decimal">{{ ingredient.measures.us.amount }}</span>
+                        {{ ingredient.measures.us.unitShort }}</p>
+                    <a class="search-ingredient" href="../results_by_ingredient/{{ingredient.name}}">Search Recipes <span>&rarr;</span></a>
+                </div>
+
+            </div>
+
+            {% endfor %}
+        </div>
     </div>
-    {% endif %}
-
-    <a href="/recipe/{{recipe.id}}/nutrition" class="btn btn-primary" >See Nutrition</a>
-    <a href="/recipe/{{recipe.id}}/price" class="btn btn-primary" >See Price Breakdown</a>
 
 
-    <h1>{{ recipe.title }}</h1>
-    <img src="{{ recipe.image }}" width="300px" alt="{{ recipe.title }}">
-    <p>ready in minutes: {{recipe.readyInMinutes}}</p>
-    <p>summary: {{recipe.summary}}</p>
-    <div class="px-2">-----------------------------------</div>
-    <p>vegetarian: {{recipe.vegetarian}}</p>
-    <p>vegan: {{recipe.vegan}}</p>
-    <p>glutenFree: {{recipe.glutenFree}}</p>
-    <p>veryHealthy: {{recipe.veryHealthy}}</p>
-    <p>cheap: {{recipe.cheap}}</p>
-    <p>veryPopular: {{recipe.veryPopular}}</p>
-    <p>sustainable: {{recipe.sustainable}}</p>
-    <p>weightWatcherSmartPoints: {{recipe.weightWatcherSmartPoints}}</p>
-    <div class="px-2">-----------------------------------</div>
+    <div class="container border-bottom pb-5">
+        <div class="mt-5 mb-3b recipe-header">
+            <h3 class="recipe-header">Steps</h3>
+        </div>
 
-    <h1>Ingredients</h1>
-    {% for ingredient in recipe.extendedIngredients %}
-    <p class="pt-2 ">{{ ingredient.name }}</p>
-    <p><span class="ingredient-decimal">{{ ingredient.measures.us.amount }}</span>  {{ ingredient.measures.us.unitShort }}</p>
-    <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" width="50px"
-        alt="{{ ingredient.image }}">
-    <div class="px-2">-----------------</div>
-    
-    {% endfor %}
+        {% for step in recipe.analyzedInstructions[0].steps %}
+        <p class="recipe-step"><span class="recipe-step-number">{{ step.number }}.</span> {{ step.step }}</p>
+        {% endfor %}
 
-    <div class="px-2">-----------------------------------</div>
+    </div>
 
-    <h1>Steps</h1>
-    {% for step in recipe.analyzedInstructions[0].steps %}
-    <h3>{{ step.number }}</h3>
-    <p>{{ step.step }}</p>
-    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
 
 
 </div>

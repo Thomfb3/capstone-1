@@ -8,7 +8,8 @@
             {% for error in field.errors %}
             <span class="text-danger edit-input-error" data="{{error}}">{{ error }}</span>
             {% endfor %}
-            {{ field(placeholder=field.label.text, class="form-control") }}
+            {{field.label(class="ps-1 text-primary")}}
+            {{ field(placeholder=field.label.text, class="form-control mb-3") }}
             {% endfor %}
 
             <button id="update-user-btn" class="btn btn-primary btn-lg btn-block">Update User</button>

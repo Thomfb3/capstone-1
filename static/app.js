@@ -1,3 +1,13 @@
+$(window).on('load', function () {
+
+    $('#loading-spinner').hide();
+    $('#loaded-check').show();
+
+    setTimeout(function(){ $('#loader').addClass("hide-loader"); }, 500);
+    setTimeout(function(){ $('#loader').hide(""); }, 1000);
+
+}) 
+
 //Toggle Login/Signup modal styles
 $("#modal-login-btn").on("click", toggleModalStyles);
 $("#modal-signup-btn").on("click", toggleModalStyles);
@@ -7,6 +17,7 @@ function toggleModalStyles() {
     $("#login-message").toggleClass("message-switch");
     $("#signup-message").toggleClass("message-switch");
     $("#login-message-background").toggleClass("move-right");
+    $("#login-message-background").toggleClass("login-message-background-2");
 }
 
 
@@ -26,9 +37,9 @@ $("#header-signup-btn").on("click", function signupToggleModalStyles() {
 
 
 
-$(document).ready(function() {
-    const signupFormErrors = document.querySelectorAll(".signup-form-error");    
-    const signupInputErrors = document.querySelectorAll(".signup-input-error");    
+$(document).ready(function () {
+    const signupFormErrors = document.querySelectorAll(".signup-form-error");
+    const signupInputErrors = document.querySelectorAll(".signup-input-error");
 
     if (signupFormErrors.length > 0) {
         errors = signupFormErrors[0].innerText;
@@ -42,8 +53,8 @@ $(document).ready(function() {
         toggleModalStyles();
     }
 
-    const loginFormErrors = document.querySelectorAll(".login-form-error");    
-    const loginInputErrors = document.querySelectorAll(".login-input-error");    
+    const loginFormErrors = document.querySelectorAll(".login-form-error");
+    const loginInputErrors = document.querySelectorAll(".login-input-error");
 
     if (loginFormErrors.length > 0 || loginInputErrors.length > 0) {
         $('#login').modal('show');
@@ -55,12 +66,20 @@ $(document).ready(function() {
         loginFormErrors[0].innerHTML += errors;
     }
 
+
+    summary = document.getElementById('summary');
+    if (summary) {
+        summary.innerHTML = summary.innerText;
+    };
+
 });
 
 
-$(document).ready(function() {
-    const editFormErrors = document.querySelectorAll(".edit-form-error");    
-    const editInputErrors = document.querySelectorAll(".edit-input-error");    
+
+
+$(document).ready(function () {
+    const editFormErrors = document.querySelectorAll(".edit-form-error");
+    const editInputErrors = document.querySelectorAll(".edit-input-error");
 
     if (editFormErrors.length > 0 || editInputErrors.length > 0) {
         $('#edit_user').modal('show');
@@ -164,7 +183,6 @@ $(document).ready(function () {
         d.innerText = numberToFraction(number)
     }
 });
-
 
 
 

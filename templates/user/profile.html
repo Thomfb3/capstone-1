@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="container mt-5 p-5">
+    <h1 class="pb-3 fw-bold"><i class="fas fa-user-circle"></i> User Profile</h1>
+</div>
+<div class="container profile-page-content" >
+    <div>
+        <p>Profile Pic:</p>
+        <img src="{{user.image_url}}" class="rounded-circle profile-page-image" alt="profile image">
+    </div>
+    <div>
+        <p class="m-0">Username:</p>
+        <h3 class="border-bottom pb-3">{{user.username}}</h3>
+        <p  class="m-0">First Name:</p>
+        <h3 class="border-bottom pb-3">{{user.first_name}}</h3>
 
-
-<div class="container" id="">
-    <p>Profile Pic:</p>
-    <img src="{{user.image_url}}" class="circle float-start" alt="profile image">
-    <p>Username:</p>
-    <h3>{{user.username}}</h3>
-    <p>First Name:</p>
-    <h3>{{user.first_name}}</h3>
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_user">
-        Edit User
-    </button>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#edit_user">
+            Edit User
+        </button>
+    </div>
 </div>
 
 
@@ -24,17 +29,17 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Edit User Form</h5>
+                <h5 class="modal-title fw-bold" id="staticBackdropLabel"><i class="fas fa-user-circle"></i> Edit User Form</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body  ">
+            <div class="modal-body p-5 ">
 
 
                 {% include 'includes/edit_user_form.html' %}
 
 
             </div>
-         
+
         </div>
     </div>
 </div>

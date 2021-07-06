@@ -9,9 +9,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Montserrat:wght@400;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/static/app.css">
   <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
   <link rel="shortcut icon" href="/static/favicon.ico">
@@ -33,18 +34,24 @@
               <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end nav-container" id="navbarNav">
               <ul class="navbar-nav">
-                
+
 
                 {% if g.user %}
-                <a class="nav-link" href="/home">My Recipes</a>
+                <a class="nav-link me-5" href="/home">My Recipes</a>
 
                 <div class="btn-group align-items-center">
-                  <div class="d-flex align-items-center profile-group" data-bs-toggle="dropdown" aria-expanded="false">
-                    <p class="profile-username">{{g.user.username}}</p>
+                  <div class="mobile-menu-items">
+                    <a href="/profile" class="nav-link">My Profile</a>
+                    <a href="/logout" class="nav-link">Logout</a>
+                  </div>
+
+                  <div class="d-flex align-items-center  justify-content-center profile-group" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     <img src="{{g.user.image_url}}" class="rounded-circle profile-image" width="45px"
                       alt="profile image">
+                    <p class="profile-username">{{g.user.username}}</p>
                   </div>
 
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -52,37 +59,42 @@
                     <li><a href="/profile" class="dropdown-item">My Profile</a></li>
                     <li> <a href="/logout" type="button" class="dropdown-item">Logout</a></li>
                   </ul>
+
+
+
                 </div>
 
                 {% else %}
 
                 <!-- Login/Signup Buttons -->
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-primary mx-2" data-bs-toggle="modal"
-                  data-bs-target="#login" id="header-login-btn">
-                  Signup
+                <button type="button" class="btn btn-outline-primary btn-header-signup mx-2" data-bs-toggle="modal"
+                  data-bs-target="#login" id="header-signup-btn">
+                  <i class="fas fa-user-plus pe-2"></i>Signup
                 </button>
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-lg btn-form" data-bs-toggle="modal" data-bs-target="#login" id="header-signup-btn">
-                  Login
+                <button type="button" class="btn btn-primary btn-lg btn-header-login" data-bs-toggle="modal"
+                  data-bs-target="#login" id="header-login-btn">
+                  <i class="fas fa-sign-in-alt pe-2"></i>Login
                 </button>
 
 
                 <!-- Login Modal -->
                 <div class="modal fade" id="login" data-bs-keyboard="false" tabindex="-1"
                   aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                 
+
                   <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
-                      <button type="button" class="btn-close login-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <button type="button" class="btn-close login-modal-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                       <div class="modal-body">
 
                         {% include 'includes/login_signup.html' %}
 
 
                       </div>
-                     
+
                     </div>
                   </div>
                 </div>
@@ -137,6 +149,3 @@
 </body>
 
 </html>
-
-
-

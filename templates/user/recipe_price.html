@@ -4,29 +4,46 @@
 {% include 'includes/search.html' %}
 
 <div class="recipe-container container" id="recipe-container">
-    <a href="/recipe/{{recipe_id}}" class="btn btn-primary" >Back to Recipe</a>
-    <div class="row">
+    <a href="/recipe/{{recipe_id}}" class="btn btn-back"><span>&larr;</span> Back to Recipe</a>
+    <div class="row price-row mt-3">
 
-    <div class="col-lg-1 offset-3">
-        <p>Total: ${{ price_format.format(dollar=round(price.totalCost)/100) }}</p>
-        <p>Cost per serving: ${{ price_format.format(dollar=round(price.totalCostPerServing)/100) }}</p>
+        <div class="col-lg-3 offset-lg-2 border me-2">
+           
+                <div class="per-serving">Cost</div>
+                <div class="price-container">
+                <div class="price"></div>
+                <p>Total: <b>${{ price_format.format(dollar=round(price.totalCost)/100) }}</b></p>
+                <p>Cost per serving: <b>${{ price_format.format(dollar=round(price.totalCostPerServing)/100) }}</b></p>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 ">
+            <canvas id="priceChart" width=""></canvas>
+        </div>
+
+
     </div>
-    <div class="col-lg-6 ">
-        <canvas id="priceChart" width=""></canvas>
-    </div>
+
+        <div class="mt-5 mb-3">
+            <h3 class="recipe-header">Ingredients</h3>
+        </div>
+
+        <div class="row mb-5">
+            {% for ingredient in  price.ingredients %}
+
+            <div class="col-lg-2 d-flex flex-column align-items-center border p-2">
+                <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" width="50px"
+                    alt="{{ ingredient.image }}" class="mb-2">
+                <p class="ingredient-name">{{ ingredient.name }}</p>
+                <p>Cost:<br> <b>$</b><span
+                        class="ingredient-price">{{ price_format.format(dollar = round(ingredient.price)/100) }}</span>
+                </p>
+            </div>
+            {% endfor %}
+        </div>
 
 </div>
-    <div class="px-2">-----------------------------------</div>
- 
-    {% for ingredient in  price.ingredients %}
 
-    <p> <span class="ingredient-name">{{ ingredient.name }}</span></p>
-    <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" width="50px"
-    alt="{{ ingredient.image }}">
 
-    <p>Price: $<span class="ingredient-price">{{ price_format.format(dollar = round(ingredient.price)/100) }}</span></p>
-    {% endfor %}
- 
-
-</div>
 {% endblock %}

@@ -4,39 +4,56 @@
 {% include 'includes/search.html' %}
 
 <div class="recipe-container container" id="recipe-container">
-        <a href="/recipe/{{recipe_id}}" class="btn btn-primary" >Back to Recipe</a>
-    <div class="row">
-        <div class="col-lg-1 offset-3">
-            <p>carbs: <span id="carbs">{{nutrition.carbs}}</span></p>
-            <p>protein: <span id="protein">{{nutrition.protein}}</span></p>
-            <p>fat: <span id="fat">{{nutrition.fat}}</span></p>
+    <a href="/recipe/{{recipe_id}}" class="btn btn-back mt-4 mb-2"><span>&larr;</span> Back to Recipe </a>
+    <div class="row macro-row">
+        <div class="col-lg-3 offset-lg-2 border macro-nutrients-container">
+            <div class="per-serving">Per Serving</div>
+            {% if nutrition.calories[-1] == "k" %}
+            <p class="macro-nutrients calories">Calories: <span id="calories">{{ nutrition.calories[:-1]}}</span></p>
+            {% else %}
+            <p class="macro-nutrients calories">Calories: <span id="calories">{{nutrition.calories}}</span></p>
+            {% endif %}
+
+            <p class="macro-nutrients carbs">Carbs: <span id="carbs">{{nutrition.carbs}}</span></p>
+            <p class="macro-nutrients protein">Protein: <span id="protein">{{nutrition.protein}}</span></p>
+            <p class="macro-nutrients fat">Fat: <span id="fat">{{nutrition.fat}}</span></p>
         </div>
-        <div class="col-lg-6 ">
+        <div class="col-lg-6">
             <canvas id="nutritionChart" width=""></canvas>
         </div>
     </div>
 
-    {% if nutrition.calories[-1] == "k" %}
-    <p>calories: <span id="calories">{{ nutrition.calories[:-1]}}</span></p>
-    {% else %}
-    <p>calories: <span id="calories">{{nutrition.calories}}</span></p>
-    {% endif %}
+    <div class="col-lg-6 offset-lg-3">
+        <table class="table table-striped mt-5 mb-5 pb-5">
+            <thead>
+                <tr>
+                    <th scope="col">Per Serving</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">%DV</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    <div class="px-2">-----------------------------------</div>
+                {% for nutrient in  nutrition.bad %}
+                <tr class="table-tr">
+                    <th scope="row">{{nutrient.title}}</th>
+                    <td>{{nutrient.amount}}</td>
+                    <td>{{nutrient.percentOfDailyNeeds}}%</td>
+                </tr>
+                {% endfor %}
 
+                {% for nutrient in  nutrition.good %}
+                <tr class="table-tr">
+                    <th scope="row">{{nutrient.title}}</th>
+                    <td>{{nutrient.amount}}</td>
+                    <td>{{nutrient.percentOfDailyNeeds}}%</td>
+                </tr>
+                {% endfor %}
 
-    {% for nutrient in  nutrition.bad %}
-
-    <p>{{nutrient.title}} : {{nutrient.amount}} | {{nutrient.percentOfDailyNeeds}}% </p>
-
-    {% endfor %}
-
-    <div class="px-2">-----------------------------------</div>
-    {% for nutrient in  nutrition.good %}
-
-    <p>{{nutrient.title}} : {{nutrient.amount}} | {{nutrient.percentOfDailyNeeds}}% </p>
-
-    {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </div>
+
 {% endblock %}

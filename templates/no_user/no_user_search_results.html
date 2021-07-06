@@ -6,11 +6,11 @@
 <div class="results-container" id="results-container">
 
     {% if results|length > 0 %}
-    <div class="mb-2">
-        <p class="border-bottom">Search Results 1 - {{ results|length }}</p>
+    <div class="p-3">
+        <p class="border-bottom pb-2">Search Results 1 - {{ results|length }}</p>
     </div>
     {% else %}
-    <div class="mb-2">
+    <div class="mb-3">
         <h4 class="border-bottom pb-1">Sorry, no results found.</h4>
         <div class="text-center">
             <i class="far fa-frown no-results-frown"></i>
@@ -18,28 +18,40 @@
     </div>
     {% endif %}
 
-    {% for res in results %}
-    <a href="#login">
-        <div class="card results-card">
-            <div class="row g-0">
 
-                <div class="col-md-2">
-                    <img src="{{res.image}}" alt="{{res.title}}" class="img-fluid results-img">
-                </div>
-                <div class="col-md-10">
-                    <div class="card-body">
-                        <h4 class="card-title">{{res.title}}</h4>
-                        <p>See Recipe</p>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-3 g-4 ">
+
+            {% for res in results %}
+
+            <div class="col d-flex align-self-stretch mb-2 justify-content-center">
+                <a href="#login" class="">
+                    <div class="card align-self-stretch " style="width: 18rem;">
+                        <div class="card-hide-overflow">
+                            <img src="{{res.image}}" class="card-img-top " alt="{{res.title}}">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{res.title}}</h5>
+                            <a href="#login" class="card-recipe-link">See recipe <span>&rarr;</span></a>
+                        </div>
                     </div>
-                </div>
-
+                </a>
             </div>
+            <!--END COL -->
+
+
+            {% endfor %}
+
+
         </div>
-    </a>
-
-    {% endfor %}
-
-
+        <!--END ROW -->
+    </div>
+    <!--END CONTAINER -->
+    {% if results|length > 0 %}
+    <div class="pt-3 text-center text-muted">
+        <p class="border-top p-2 small">End of Results</p>
+    </div>
+    {% endif %}
 
 </div>
 {% endblock %}
