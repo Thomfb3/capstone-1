@@ -37,6 +37,36 @@ $("#header-signup-btn").on("click", function signupToggleModalStyles() {
 
 
 
+//Toggle MOBILE Login/Signup modal styles
+$("#modal-login-btn-mobile").on("click", toggleModalStylesMobile);
+$("#modal-signup-btn-mobile").on("click", toggleModalStylesMobile);
+
+
+function toggleModalStylesMobile() {
+    $("#login-form").toggleClass("message-switch-mobile");
+    $("#signup-form").toggleClass("message-switch-mobile");
+
+}
+
+
+$("#header-login-btn").on("click", function loginToggleModalStyles() {
+    if ($("#login-form").hasClass("message-switch-mobile")) {
+        toggleModalStylesMobile();
+    }
+});
+
+
+$("#header-signup-btn").on("click", function signupToggleModalStyles() {
+    if ($("#signup-form").hasClass("message-switch-mobile")) {
+        toggleModalStylesMobile();
+    }
+});
+
+
+
+
+
+
 $(document).ready(function () {
     const signupFormErrors = document.querySelectorAll(".signup-form-error");
     const signupInputErrors = document.querySelectorAll(".signup-input-error");
