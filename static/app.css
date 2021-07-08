@@ -878,5 +878,8 @@ body {
         right: 0;
         top: 0;
     }
+    #search {
+        margin-left: -15px;
+    }
 
 }
