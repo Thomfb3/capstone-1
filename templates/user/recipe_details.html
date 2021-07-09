@@ -8,12 +8,12 @@
 
     <div class="container border-bottom pb-5">
         {% if recipe.id in g.user.user_recipe_ids %}
-        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="fas fa-star remove_favorite_button" type="button"
+        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="fas fa-star remove_favorite_button"
                 data-id="{{recipe.id}}" data-bs-toggle="tooltip" data-bs-placement="top"
                 title="Remove from Favorites"></i></h1>
 
         {% else %}
-        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="far fa-star make_favorite_button" type="button"
+        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="far fa-star make_favorite_button"
                 data-id="{{recipe.id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Save to Favorites"></i>
         </h1>
 
@@ -21,7 +21,7 @@
         <p>Ready in <b>{{recipe.readyInMinutes}}</b> minutes.</p>
 
         <div class="recipe-main">
-            <div class="text-center">
+            <div class="text-center recipe-image-container">
                 {% if recipe.image %}
                 <img class="mb-3" src="{{ recipe.image }}" width="400px" alt="{{ recipe.title }}">
                 {% else %}

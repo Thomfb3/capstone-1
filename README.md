@@ -1,4 +1,4 @@
-# CAPSTONE 1 PROPOSAL
+# CAPSTONE 1 SUMMARY
 ---
 ## Objective
 This web application will be designed to allow users to search for recipes according to their taste or nutritional goals. The nutritional information for each recipe will be available. Users will be able to save recipes to their account and plan weekly meals. 
@@ -40,7 +40,16 @@ The app should be able to do the following:
 ## UserFlows
 Users will enter the app through the homepage. This will show the top 10 Trending/Popular recipes. There will be a search bar for searching for recipes. Users will be able to drill down into recipes to see the full information. All of this will be available without the need to be logged in. From the homepage the user can Create an Account or Login. Once logged in the user will access to a dashboard with saved recipes and any other information.
 
+
 ## Stretch Goals
 Further goals include adding functionality to search recipes based on budget or "what's in the fridge". Also allow users to plan meals based on calories, macro-nutrients, and/or budget.
 
 
+## Tests
+Test can be found in the Tests folder. There are two subfolders. The first sub-folder named "js-tests" contains the JavaScripts tests which use the Jasmine testing framework. The second folder named "python-tests" contains the Python tests using Unittest.
+
+
+## Resources
+A PDF of the DB Schema and User flow drawings can be found here: static/images/developer/Capstone-1_data-schema.pdf
+Here's a link to the PDF:
+https://github.com/Thomfb3/capstone-1/blob/main/static/images/developer/Capstone-1_data-schema.pdf

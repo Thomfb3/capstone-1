@@ -882,4 +882,22 @@ body {
         margin-left: -15px;
     }
 
+    .recipe-image-container {
+        display: flex;
+        flex-direction: column;
+    }
+    .recipe-image-container img {
+        align-self: center;
+    }
+    .recipe-info-btns {
+        position: relative;
+        right: 10px;
+        width: 105%;
+    }
+
+    .fa-star {
+        display: block;
+        margin: 20px 0px 0px 0px;
+    }
+
 }
