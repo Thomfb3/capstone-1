@@ -2,11 +2,10 @@
 $(window).on('load', function () {
     //loading spinner
     $('#loading-spinner').hide();
-    //load successful icon
-    $('#loaded-check').show();
+
     //Timing the load spinners
-    setTimeout(function () { $('#loader').addClass("hide-loader"); }, 500);
-    setTimeout(function () { $('#loader').hide(""); }, 1000);
+    setTimeout(function () { $('#loader').addClass("hide-loader"); }, 200);
+    setTimeout(function () { $('#loader').hide(""); }, 400);
 
 });
 
@@ -146,13 +145,71 @@ $(document).ready(function () {
         };
     };
 
+// `<i class='fas fa-star remove_favorite_button' data-id='${recipeID}' data-bs-toggle='tooltip' data-bs-placement='top' title='Remove from Favorites' data-bs-original-title='Remove from Favorites' aria-label='Remove from Favorites'></i>`
+
+
+// `<i class='fas fa-star make_favorite_button' data-id='${recipeID}' data-bs-toggle='tooltip' data-bs-placement='top' title='Save from Favorites' data-bs-original-title='Save from Favorites' aria-label='Save from Favorites'></i>`
+
+
     //Update UI with class toggle
     function handleSavedRecipeUiToggle(target) {
-        target.toggleClass("make_favorite_button");
-        target.toggleClass("remove_favorite_button");
-        target.toggleClass("fas");
-        target.toggleClass("far");
+        //Alert elements for favorite toggle
+        const addFavSuccess = $("#add-favorite-success");
+        const addFavSuccessMessage = $("#add-favorite-success-message");
+        const removeFavSuccess = $("#remove-favorite-success");
+        const removeFavSuccessMessage = $("#remove-favorite-success-message");
+        //Alerts text for favorite toggles
+        const addedMessage = `This recipe has been <b>added</b> to your favorites.`;
+        const removedMessage = `This recipe has been <b>removed</b> to your favorites`;
+
+        //If it has the "Make" classes,then we switch it to "Remove" classes, removing the favorite classes
+        if (target.hasClass("make_favorite_button")) {
+            remove_fav_title = "Remove from Favorite"
+            target.removeClass("far make_favorite_button");
+            target.addClass("fas remove_favorite_button");
+            target.attr("title", remove_fav_title)
+            target.attr("data-bs-original-title", remove_fav_title)
+            target.attr("aria-label", remove_fav_title)
+
+            addFavSuccess.css("height", "40px");
+
+            setTimeout(function () { 
+                addFavSuccessMessage.html(addedMessage);
+            }, 300);
+
+            setTimeout(function () { 
+                addFavSuccess.css("height", "0px");
+                addFavSuccessMessage.text("");
+            }, 4000);
+
+        } else {
+
+            add_fav_title = "Save to Favorite"
+            target.removeClass("fas remove_favorite_button");
+            target.addClass("far make_favorite_button");
+            target.attr("title", add_fav_title)
+            target.attr("data-bs-original-title", add_fav_title)
+            target.attr("aria-label", add_fav_title)
+
+            removeFavSuccess.css("height", "40px");
+
+
+            setTimeout(function () { 
+                removeFavSuccessMessage.html(removedMessage);
+            }, 300);
+        
+
+            setTimeout(function () { 
+                removeFavSuccess.css("height", "0px");
+                removeFavSuccessMessage.text("");
+            }, 4000);
+        }
+
     };
+
+
+
+    
 
     //Event listener Adding recipe to favorites
     $("#recipe-container").on("click", addRecipeToFavorites);

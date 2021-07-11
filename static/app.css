@@ -7,6 +7,7 @@
     --darkgray: #6d6d6d;
     --tooltip: rgb(0, 172, 126); 
     --success: #0acfba;
+    --success-light: #5efdb5;
     --logo-font: 'Calistoga', cursive;
     --common-font: 'Montserrat', sans-serif;
   }
@@ -658,7 +659,7 @@ body {
 
 .hide-loader {
     opacity: 0;
-    transition: all .1s ease-out;
+    transition: all .2s ease-out;
 }
 
 .recipe-header {
@@ -667,21 +668,51 @@ body {
     padding-bottom: 20px;
 }
 
-.ingredient-measurement {
-    font-weight: 700;
-    margin-top: -10px;
-    margin-bottom: 0px;
+.ingredients-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    border: 1px solid #eee;
+    padding: 10px;
 }
 
+.ingredients-image {
+    padding: 10px 0px 20px 0px;
+    justify-self:center;
+    margin: auto;
+}
+
+.ingredient-measurement {
+    font-weight: 700;
+    font-size: 14px;
+    margin-top:-10px;
+}
+
+.ingredient-name {
+
+}
 
 .ingredient-price {
     font-weight: 700;
+
 }
 
-.search-ingredient {
+.ingredient-search {
     color: var(--primary);
     font-size: 12px;
     text-decoration: none;
+}
+.ingredient-search:hover {
+    color: var(--secondary);
+}
+
+.ingredient-background-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 100px;
 }
 
 .recipe-step {
@@ -762,6 +793,35 @@ body {
 .saved {
     color: var(--secondary);
 }
+.fav:hover {
+    cursor: pointer;
+}
+
+#add-favorite-success {
+    background-color: var(--success-light);
+    margin-bottom: 15px;
+    height: 0px;
+    transition: all .3s cubic-bezier(0, 0.46, 0.3, 0.97);
+}
+
+#add-favorite-success-message {
+    padding: 10px;
+    color: #04693c;
+}
+
+
+#remove-favorite-success {
+    background-color: #edd836;
+    margin-bottom: 15px;
+    height: 0px;
+    transition: all .3s cubic-bezier(0, 0.46, 0.3, 0.97);
+}
+
+#remove-favorite-success-message {
+    padding: 10px;
+    color: #604b0b;
+}
+
 
 @media only screen and (max-width: 991px) {
     .nav-container {

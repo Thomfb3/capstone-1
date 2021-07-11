@@ -8,16 +8,26 @@
 
     <div class="container border-bottom pb-5">
         {% if recipe.id in g.user.user_recipe_ids %}
-        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="fas fa-star remove_favorite_button"
+        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="fav fas fa-star remove_favorite_button"
                 data-id="{{recipe.id}}" data-bs-toggle="tooltip" data-bs-placement="top"
                 title="Remove from Favorites"></i></h1>
 
         {% else %}
-        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="far fa-star make_favorite_button"
+        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="fav far fa-star make_favorite_button"
                 data-id="{{recipe.id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Save to Favorites"></i>
         </h1>
 
         {% endif %}
+
+        <div id="add-favorite-success">
+                <p id='add-favorite-success-message'></p>
+        </div>
+
+        <div id="remove-favorite-success">
+                <p id='remove-favorite-success-message'></p>
+        </div>
+
+
         <p>Ready in <b>{{recipe.readyInMinutes}}</b> minutes.</p>
 
         <div class="recipe-main">
@@ -94,16 +104,16 @@
         <div class="row">
             {% for ingredient in recipe.extendedIngredients %}
 
-            <div class="col-lg-2 d-flex flex-column align-items-center border p-2">
+            <div class="col-lg-2 ingredients-box">
 
-                <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" class=""
-                    alt="{{ ingredient.name }}" width="50px">
+                <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" class="ingredients-image"
+                    alt="{{ ingredient.name }}" width="70px"> 
                 <div class="">
-                    <p class="pb-1">{{ ingredient.name }}</p>
+                    <p class="ingredient-name">{{ ingredient.name }}</p>
                     <p class="ingredient-measurement"><span
                             class="ingredient-decimal">{{ ingredient.measures.us.amount }}</span>
                         {{ ingredient.measures.us.unitShort }}</p>
-                    <a class="search-ingredient" href="../results_by_ingredient/{{ingredient.name}}">Search Recipes <span>&rarr;</span></a>
+                    <a class="ingredient-search" href="../results_by_ingredient/{{ingredient.name}}">Search Recipes <span>&rarr;</span></a>
                 </div>
 
             </div>

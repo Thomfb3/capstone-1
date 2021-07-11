@@ -1,5 +1,7 @@
 ////////Predetermined chart RGB colors
-const COLORS = [ "54, 162, 236", "255, 99, 132", "186, 75, 192", "255, 205, 87", "0, 172, 126", "75, 192, 192", "75, 108, 192", "134, 75, 192", "82, 46, 189", "239, 192, 40", "239, 76, 40", "239, 40, 143", "239, 40, 40", "34, 16, 235", "170, 232, 63", "240, 130, 209", "15, 105, 106"]
+const COLORS = ["54, 162, 236", "255, 99, 132", "186, 75, 192", "255, 205, 87", "0, 172, 126", "75, 192, 192", "75, 108, 192", "134, 75, 192", "82, 46, 189", "239, 192, 40", "239, 76, 40", "239, 40, 143", "239, 40, 40", "34, 16, 235", "170, 232, 63", "240, 130, 209", "15, 105, 106"]
+
+
 
 ////Collect elements value 'nutrients'
 let proteinEl = document.getElementById("protein");
@@ -13,13 +15,13 @@ if (proteinEl) {
     let protein = parseFloat(proteinEl.innerText.slice(0, -1));
 
     ///Create chart with Chart JS, with three colors for 3 macro nutrients
-    var ctx = document.getElementById("nutritionChart").getContext('2d');
-    var nutritionChart = new Chart(ctx, {
+    var nutritionCtx = document.getElementById("nutritionChart").getContext('2d');
+    var nutritionChart = new Chart(nutritionCtx, {
         type: 'doughnut',
         data: {
-            labels: ["Carbs", "Protein", "Fat"],
+            labels: ["Carbs (grams)", "Protein (grams)", "Fat (grams)"],
             datasets: [{
-                label: '# of Votes',
+                label: 'Macronutrients',
                 data: [carbs, protein, fat],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -34,7 +36,7 @@ if (proteinEl) {
                 borderWidth: 1
             }]
         },
-    });
+    })
 };
 
 
@@ -43,7 +45,7 @@ let ingredientNames = document.querySelectorAll(".ingredient-name");
 let ingredientPrices = document.querySelectorAll(".ingredient-price");
 
 //If the elements for ingredients are there, produce arrays with chart data
-if (ingredientNames.length > 0) {
+if (ingredientPrices.length > 0) {
 
     //array for ingredients names
     let ingredientNamesArr = [];
@@ -64,9 +66,9 @@ if (ingredientNames.length > 0) {
     };
 
     //Produce colors for chart slices
-    for(let i=0; i < ingredientNamesArr.length; i++) {
+    for (let i = 0; i < ingredientNamesArr.length; i++) {
         //If there are more ingredients than colors, produce random colors
-        if(i > COLORS.length) {
+        if (i > COLORS.length) {
             r = Math.floor(Math.random() * 256);
             g = Math.floor(Math.random() * 256);
             b = Math.floor(Math.random() * 256);
@@ -80,18 +82,38 @@ if (ingredientNames.length > 0) {
     };
 
     ///Create chart with Chart JS
-    var ctx = document.getElementById("priceChart").getContext('2d');
-    var priceChart = new Chart(ctx, {
+    var priceCtx = document.getElementById("priceChart").getContext('2d');
+    var priceChart = new Chart(priceCtx, {
         type: 'pie',
         data: {
             labels: ingredientNamesArr,
             datasets: [{
-                label: '# of Votes',
+                label: 'Ingredients Cost',
                 data: ingredientPricesArr,
                 backgroundColor: colorsArr,
                 borderColor: borderColorsArr,
                 borderWidth: 1
             }]
         },
-    });
-};
+        options: {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            var label = context.dataset.label || '';
+
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+

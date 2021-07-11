@@ -343,6 +343,14 @@ def user_profile():
     user = User.query.get_or_404(g.user.id)
     edit_user_form = UserEditForm(obj=user)
 
+    if edit_user_form.image_url.data == "":
+        image_url = User.image_url.default.arg
+    else:
+        image_url = edit_user_form.image_url.data
+        
+    print("=========================")
+    print(image_url)
+
     if edit_user_form.validate_on_submit():
         # authenticate will return a user or False
         if User.authenticate(user.username, edit_user_form.password.data):
@@ -350,9 +358,8 @@ def user_profile():
             try:
                 user.username = edit_user_form.username.data
                 user.first_name = edit_user_form.first_name.data
-                user.image_url = edit_user_form.image_url.data or "/static/images/default-pic.png"
+                user.image_url = image_url
                 password = edit_user_form.password.data
-
                 db.session.add(user)
                 db.session.commit()
 
