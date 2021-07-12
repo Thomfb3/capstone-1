@@ -145,11 +145,6 @@ $(document).ready(function () {
         };
     };
 
-// `<i class='fas fa-star remove_favorite_button' data-id='${recipeID}' data-bs-toggle='tooltip' data-bs-placement='top' title='Remove from Favorites' data-bs-original-title='Remove from Favorites' aria-label='Remove from Favorites'></i>`
-
-
-// `<i class='fas fa-star make_favorite_button' data-id='${recipeID}' data-bs-toggle='tooltip' data-bs-placement='top' title='Save from Favorites' data-bs-original-title='Save from Favorites' aria-label='Save from Favorites'></i>`
-
 
     //Update UI with class toggle
     function handleSavedRecipeUiToggle(target) {
@@ -164,6 +159,7 @@ $(document).ready(function () {
 
         //If it has the "Make" classes,then we switch it to "Remove" classes, removing the favorite classes
         if (target.hasClass("make_favorite_button")) {
+            //Set classes and attributes to switch Make and Remove buttons
             remove_fav_title = "Remove from Favorite"
             target.removeClass("far make_favorite_button");
             target.addClass("fas remove_favorite_button");
@@ -171,19 +167,22 @@ $(document).ready(function () {
             target.attr("data-bs-original-title", remove_fav_title)
             target.attr("aria-label", remove_fav_title)
 
+            //Animate height in
             addFavSuccess.css("height", "40px");
 
-            setTimeout(function () { 
+            //Set timeout to add text after height animation
+            setTimeout(function () {
                 addFavSuccessMessage.html(addedMessage);
             }, 300);
 
-            setTimeout(function () { 
+            //Set timeout allow alert to dismiss
+            setTimeout(function () {
                 addFavSuccess.css("height", "0px");
                 addFavSuccessMessage.text("");
             }, 4000);
 
         } else {
-
+            //Set classes and attributes to switch Make and Remove buttons
             add_fav_title = "Save to Favorite"
             target.removeClass("fas remove_favorite_button");
             target.addClass("far make_favorite_button");
@@ -191,15 +190,16 @@ $(document).ready(function () {
             target.attr("data-bs-original-title", add_fav_title)
             target.attr("aria-label", add_fav_title)
 
+            //Animate height in
             removeFavSuccess.css("height", "40px");
 
-
-            setTimeout(function () { 
+            //Set timeout to add text after height animation
+            setTimeout(function () {
                 removeFavSuccessMessage.html(removedMessage);
             }, 300);
-        
 
-            setTimeout(function () { 
+            //Set timeout allow alert to dismiss
+            setTimeout(function () {
                 removeFavSuccess.css("height", "0px");
                 removeFavSuccessMessage.text("");
             }, 4000);
@@ -208,8 +208,20 @@ $(document).ready(function () {
     };
 
 
+    //Dismiss alerts after a few seconds
+    let alerts = document.querySelectorAll(".alert");
+    if (alerts.length > 0) {
+        //fade out 
+        setTimeout(function () {
+            $(alerts[0]).addClass('no-opacity');
+        }, 3000);
+        //remove element
+        setTimeout(function () {
+            alerts[0].remove();
+        }, 3300);
+    }
 
-    
+
 
     //Event listener Adding recipe to favorites
     $("#recipe-container").on("click", addRecipeToFavorites);
