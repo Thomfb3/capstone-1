@@ -114,35 +114,36 @@ $(document).ready(function () {
         summary.innerHTML = summary.innerText;
     };
 
-    ////////////Edit Summary so links got our web app and not to API Website with broken links
-    //Collect RecipeIds in summary to create URLs to our routes 
-    let summaryLinks = summary.querySelectorAll("a");
-    //Empty array to collect recipe ids from summary links
-    let summaryLinkIds = [];
+    if (summary) {
+        //////////////Edit Summary so links got our web app and not to API Website with broken links
+        //Collect RecipeIds in summary to create URLs to our routes 
+        let summaryLinks = summary.querySelectorAll("a");
+        //Empty array to collect recipe ids from summary links
+        let summaryLinkIds = [];
 
-    //Loop through summary a tag nodelist
-    for (let i = 0; i < summaryLinks.length; i++) {
-        //Collect href attribute value
-        let pathArray = summaryLinks[i].href.split("");
+        //Loop through summary a tag nodelist
+        for (let i = 0; i < summaryLinks.length; i++) {
+            //Collect href attribute value
+            let pathArray = summaryLinks[i].href.split("");
 
-        //Loop through href value to collect recipe ID
-        for (let j = pathArray.length - 1; j > 0; j--) {
-            //Based on Summary url format, every link ends with "-"and Id number
-            if (pathArray[j] != "-") {
-                summaryLinkIds.push(pathArray[j]);
-            } else {
-                //Set j=0 to break loop;
-                j = 0;
+            //Loop through href value to collect recipe ID
+            for (let j = pathArray.length - 1; j > 0; j--) {
+                //Based on Summary url format, every link ends with "-"and Id number
+                if (pathArray[j] != "-") {
+                    summaryLinkIds.push(pathArray[j]);
+                } else {
+                    //Set j=0 to break loop;
+                    j = 0;
+                }
             }
-        }
 
-        //Set link element's href to new route
-        summaryLinks[i].href = `/recipe/${summaryLinkIds.reverse().join("")}`;
-        //empty link array for the next link
-        summaryLinkIds = [];
+            //Set link element's href to new route
+            summaryLinks[i].href = `/recipe/${summaryLinkIds.reverse().join("")}`;
+            //empty link array for the next link
+            summaryLinkIds = [];
+        };
+
     };
-
-
 
 
     ///////Show modal when clicking recipe search results if user is not logged in
@@ -257,7 +258,7 @@ $(document).ready(function () {
         }, 3300);
     }
 
-    
+
 
 
     //Event listener Adding recipe to favorites
