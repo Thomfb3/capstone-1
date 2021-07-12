@@ -20,11 +20,11 @@
         {% endif %}
 
         <div id="add-favorite-success">
-                <p id='add-favorite-success-message'></p>
+            <p id='add-favorite-success-message'></p>
         </div>
 
         <div id="remove-favorite-success">
-                <p id='remove-favorite-success-message'></p>
+            <p id='remove-favorite-success-message'></p>
         </div>
 
 
@@ -98,6 +98,7 @@
 
     <div class="container border-bottom pb-5">
         <div class="mt-5 mb-3 ">
+            {% if recipe.extendedIngredients %}
             <h3 class="recipe-header">Ingredients</h3>
         </div>
 
@@ -106,46 +107,42 @@
 
             <div class="col-lg-2 ingredients-box">
 
-                <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}" class="ingredients-image"
-                    alt="{{ ingredient.name }}" width="70px"> 
+                <img src="https://spoonacular.com/cdn/ingredients_100x100/{{ ingredient.image }}"
+                    class="ingredients-image" alt="{{ ingredient.name }}" width="70px">
                 <div class="">
                     <p class="ingredient-name">{{ ingredient.name }}</p>
                     <p class="ingredient-measurement"><span
                             class="ingredient-decimal">{{ ingredient.measures.us.amount }}</span>
                         {{ ingredient.measures.us.unitShort }}</p>
-                    <a class="ingredient-search" href="../results_by_ingredient/{{ingredient.name}}">Search Recipes <span>&rarr;</span></a>
+                    <a class="ingredient-search" href="../results_by_ingredient/{{ingredient.name}}">Search Recipes
+                        <span>&rarr;</span></a>
                 </div>
 
             </div>
 
             {% endfor %}
         </div>
-    </div>
 
-
-    <div class="container border-bottom pb-5">
-        <div class="mt-5 mb-3b recipe-header">
-            <h3 class="recipe-header">Steps</h3>
+        {% else %}
+        <h3 class="recipe-header"><i class="far fa-frown pe-2"></i>Sorry, the ingredients are missing.</h3>
         </div>
+    {% endif %}
+</div>
 
-        {% for step in recipe.analyzedInstructions[0].steps %}
-        <p class="recipe-step"><span class="recipe-step-number">{{ step.number }}.</span> {{ step.step }}</p>
-        {% endfor %}
 
+<div class="container border-bottom pb-5">
+    <div class="mt-5 mb-3b recipe-header">
+        {% if recipe.analyzedInstructions %}
+        <h3 class="recipe-header">Steps</h3>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+    {% for step in recipe.analyzedInstructions[0].steps %}
+    <p class="recipe-step"><span class="recipe-step-number">{{ step.number }}.</span> {{ step.step }}</p>
+    {% endfor %}
+    {% else %}
+    <h3 class="recipe-header"><i class="far fa-frown pe-2"></i>Sorry, the instructions are missing.</h3>
+</div>
+{% endif %}
+</div>
 
 </div>
 {% endblock %}

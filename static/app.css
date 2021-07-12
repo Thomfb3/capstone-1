@@ -24,9 +24,11 @@ body {
     opacity: 1;
     transition: all .3s cubic-bezier(0, 0.46, 0.3, 0.97);
 }
+
 .no-opacity {
     opacity: 0;
 }
+
 .main-container {
     min-height: 100vh; /* will cover the 100% of viewport */
     overflow: hidden;
@@ -62,7 +64,6 @@ body {
     top: 50px;
     overflow: hidden;
 }
-
 
 .home-header-2 {
     color: var(--white);
@@ -238,10 +239,13 @@ body {
     padding-left: 5px;
 }
 
-.card:hover .card-recipe-link {
-    color: var(--primary);
+.card-recipe-link {
+    color: var(--primary-dark) !important;
 }
 
+.card:hover .card-recipe-link {
+    color: var(--primary) !important;
+}
 
 
 .card-hide-overflow {
@@ -253,7 +257,6 @@ body {
     width: 110%;
     transform: translate(-15px,-20px);
 }
-
 
 
 .results-container {
@@ -829,6 +832,18 @@ body {
     color: #604b0b;
 }
 
+.pagination-box {
+    padding: 20px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+ 
+
+
+
+
 
 @media only screen and (max-width: 991px) {
     .nav-container {
@@ -966,5 +981,9 @@ body {
         display: block;
         margin: 20px 0px 0px 0px;
     }
-
+    
+    .pagination-box {
+        margin: 50px;
+    }
+     
 }

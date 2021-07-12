@@ -19,34 +19,36 @@
     </div>
     {% endif %}
 
-
     <div class="container">
-        <div class="row row-cols-1 row-cols-lg-3 g-4 ">
-     
-            {% for recipe in recipes %}
-         
-            <div class="col d-flex align-self-stretch mb-2 justify-content-center">
-                <a href="/recipe/{{ recipe.id }}" class="">
-                    <div class="card align-self-stretch " style="width: 18rem;">
-                        <div class="card-hide-overflow">
-                            <img src="{{recipe.image}}" class="card-img-top " alt="{{recipe.title}}">
+            <div class="row row-cols-1 row-cols-md-3 g-4 ">
+    
+                {% for recipe in recipes %}
+    
+                <div class="col d-flex align-self-stretch mb-2 justify-content-center">
+                    <a href="/recipe/{{ recipe.id }}" class="">
+                        <div class="card align-self-stretch " style="width: 18rem;">
+                            <div class="card-hide-overflow">
+                                <img src="{{recipe.image}}" class="card-img-top " alt="{{recipe.title}}">
+                            </div>
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title">{{recipe.title}}</h5>
+                                <a href="/recipe/{{ recipe.id }}" class="card-recipe-link">See recipe <span>&rarr;</span></a>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ loop.index }}. {{recipe.title}}</h5>
-                            <p  class="card-recipe-link">See recipe <span>&rarr;</span></p>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+                <!--END COL -->
+    
+                {% endfor %}
+    
             </div>
-            <!--END COL -->
-            {% endfor %}
-            
-
+            <!--END ROW -->
         </div>
-        <!--END ROW -->
-    </div>
-    <!--END CONTAINER -->
+        <!--END CONTAINER -->
 
 </div>
 
 {% endblock %}
+
+
+

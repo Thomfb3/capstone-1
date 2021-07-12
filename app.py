@@ -31,7 +31,7 @@ API_KEY = "ac7991b98f02431da8a378c8d61af292"
 #API Search url base
 API_SEARCH_BASE = "https://api.spoonacular.com/recipes/complexSearch"
 #Search results number
-SEARCH_RESULTS = "10"
+SEARCH_RESULTS = "12"
 
 
 ##############################################################################
@@ -168,17 +168,20 @@ def homepage_search_results():
 
     #collect query term from args
     search = request.args.get('q')
+    offset_number = request.args.get('offset') or SEARCH_RESULTS
+
+    offset = int(offset_number) + int(SEARCH_RESULTS)
 
     #set params for API, capture response, set response to JSON
-    params={"apiKey": API_KEY, "query" : search, "number": SEARCH_RESULTS}
+    params={"apiKey": API_KEY, "query" : search, "number": SEARCH_RESULTS, "offset" : offset}
     response = requests.get(API_SEARCH_BASE,  params=params)
     res = response.json()['results']
 
     if g.user:
         #If the user is logged in go to user search results page
-        return render_template('user/search_results.html', results=res)
+        return render_template('user/search_results.html', results=res, offset=offset, search=search)
     #No user search results page
-    return render_template('no_user/no_user_search_results.html', results=res, signup_form=signup_form, login_form=login_form)
+    return render_template('no_user/no_user_search_results.html', results=res, offset=offset, search=search, signup_form=signup_form, login_form=login_form)
 
 
 
@@ -347,9 +350,6 @@ def user_profile():
         image_url = User.image_url.default.arg
     else:
         image_url = edit_user_form.image_url.data
-        
-    print("=========================")
-    print(image_url)
 
     if edit_user_form.validate_on_submit():
         # authenticate will return a user or False

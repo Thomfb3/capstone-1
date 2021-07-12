@@ -11,6 +11,7 @@ $(window).on('load', function () {
 
 
 
+
 $(document).ready(function () {
 
     ///////Functions to toggle classes between login and sign modals
@@ -71,6 +72,7 @@ $(document).ready(function () {
 
 
 
+
     ///////Functions to show errors after reload after invalid SIGNUP form submission
     const signupFormErrors = document.querySelectorAll(".signup-form-error");
     const signupInputErrors = document.querySelectorAll(".signup-input-error");
@@ -85,6 +87,7 @@ $(document).ready(function () {
         $('#login').modal('show');
         toggleModalStyles();
     };
+
 
 
 
@@ -104,18 +107,48 @@ $(document).ready(function () {
 
 
 
-    /////Convert plain text into HTML for recipe summary
-    summary = document.getElementById('summary');
+
+    //////////Convert plain text into HTML for recipe summary
+    let summary = document.getElementById('summary');
     if (summary) {
         summary.innerHTML = summary.innerText;
     };
+
+    ////////////Edit Summary so links got our web app and not to API Website with broken links
+    //Collect RecipeIds in summary to create URLs to our routes 
+    let summaryLinks = summary.querySelectorAll("a");
+    //Empty array to collect recipe ids from summary links
+    let summaryLinkIds = [];
+
+    //Loop through summary a tag nodelist
+    for (let i = 0; i < summaryLinks.length; i++) {
+        //Collect href attribute value
+        let pathArray = summaryLinks[i].href.split("");
+
+        //Loop through href value to collect recipe ID
+        for (let j = pathArray.length - 1; j > 0; j--) {
+            //Based on Summary url format, every link ends with "-"and Id number
+            if (pathArray[j] != "-") {
+                summaryLinkIds.push(pathArray[j]);
+            } else {
+                //Set j=0 to break loop;
+                j = 0;
+            }
+        }
+
+        //Set link element's href to new route
+        summaryLinks[i].href = `/recipe/${summaryLinkIds.reverse().join("")}`;
+        //empty link array for the next link
+        summaryLinkIds = [];
+    };
+
 
 
 
     ///////Show modal when clicking recipe search results if user is not logged in
     $("#results-container a").click(function () {
         $("#login").modal('show');
-    })
+    });
 
 
 
@@ -126,6 +159,7 @@ $(document).ready(function () {
     if (editFormErrors.length > 0 || editInputErrors.length > 0) {
         $('#edit_user').modal('show');
     };
+
 
 
 
@@ -208,7 +242,9 @@ $(document).ready(function () {
     };
 
 
-    //Dismiss alerts after a few seconds
+
+
+    ////////Dismiss alerts after a few seconds
     let alerts = document.querySelectorAll(".alert");
     if (alerts.length > 0) {
         //fade out 
@@ -221,6 +257,7 @@ $(document).ready(function () {
         }, 3300);
     }
 
+    
 
 
     //Event listener Adding recipe to favorites
@@ -233,6 +270,8 @@ $(document).ready(function () {
     });
 
 });
+
+
 
 
 ///////Converts decimals into fractions for ingredient measurements example: 0.5 cups -> 1/2 cups
