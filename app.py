@@ -197,7 +197,7 @@ def search_by_ingredient_results(ingredient):
     response = requests.get("https://api.spoonacular.com/recipes/findByIngredients",  params=params)
     res = response.json()
 
-    return render_template('user/search_results.html', results=res)
+    return render_template('user/search_by_ingredients_results.html', results=res, ingredient=ingredient)
 
 
 

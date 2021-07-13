@@ -725,6 +725,12 @@ body {
     height: 100px;
 }
 
+.ingredient-callout {
+    color: var(--primary);
+    text-transform: capitalize;
+    font-size: 20px;
+}
+
 .recipe-step {
     font-size: 20px;
 }
@@ -835,7 +841,7 @@ body {
 .pagination-box {
     padding: 20px;
     margin-bottom: 40px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e2e2e2;
     display: flex;
     align-items: center;
 }

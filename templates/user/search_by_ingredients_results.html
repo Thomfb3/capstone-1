@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'includes/search.html' %}
+
+<div class="results-container pb-2" id="results-container">
+
+    {% if results|length > 0 %}
+    <div class="pagination-box">
+        
+        <p class="flex-grow-1 m-1">Top <b>{{ results|length }}</b> results with <b class="ingredient-callout">{{ ingredient }}</b></p>
+
+    </div>
+
+    {% else %}
+    <div class="mb-3">
+        <h4 class="border-bottom pb-1">Sorry, no results found.</h4>
+        <div class="text-center">
+            <i class="far fa-frown no-results-frown"></i>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4 ">
+
+            {% for res in results %}
+            <div class="col d-flex align-self-stretch mb-2 justify-content-center">
+                <a href="/recipe/{{ res.id }}" class="">
+                    <div class="card align-self-stretch " style="width: 18rem;">
+                        <div class="card-hide-overflow">
+                            <img src="{{res.image}}" class="card-img-top " alt="{{res.title}}">
+                        </div>
+                        <div class="card-body card-body d-flex flex-column justify-content-between">
+                            <h5 class="card-title">{{res.title}}</h5>
+                            <a href="/recipe/{{ res.id }}" class="card-recipe-link">See recipe <span>&rarr;</span></a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!--END COL -->
+
+            {% endfor %}
+
+        </div>
+        <!--END ROW -->
+    </div>
+    <!--END CONTAINER -->
+    {% if results|length > 0 %}
+    <div class="pagination-box">
+       
+    </div>
+    <p class="text-center">End of Results</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}
