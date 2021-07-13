@@ -1,4 +1,9 @@
 # CAPSTONE 1 SUMMARY
+
+# See Demo on Heroku
+https://thomb-recipe-app.herokuapp.com/
+
+
 ---
 ## Objective
 This web application will be designed to allow users to search for recipes according to their taste or nutritional goals. The nutritional information for each recipe will be available. Users will be able to save recipes to their account and plan weekly meals. 
