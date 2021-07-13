@@ -164,19 +164,65 @@ $(document).ready(function () {
 
 
 
+
+    //////////Event listener Adding recipe to favorites
+    $("#recipe-container").on("click", addRecipeToFavorites);
+    let waitingForAxios = false;
+    let miniLoader = document.getElementById("mini-loader");
+
     ///////Save recipes functions
     async function addRecipeToFavorites(evt) {
-        if ($(evt.target).is('.make_favorite_button')) {
+        if ($(evt.target).is('.make_favorite_button') && !waitingForAxios) {
+            //show loader
+            miniLoader.style.display = "inline-block";
+        
+            //Set to true prevent duplicate requests before response
+            waitingForAxios = true;
+
             //Collect recipe ID, push it database for user, update UI
             const recipeID = $(evt.target).attr('data-id');
-            await axios.post(`/save_recipe/${recipeID}`);
-            handleSavedRecipeUiToggle($(evt.target));
+            await axios.post(`/save_recipe/${recipeID}`).then(response => {
+                //Update UI function
+                handleSavedRecipeUiToggle($(evt.target));
 
-        } else if ($(evt.target).is('.remove_favorite_button')) {
+                //fade out loader
+                miniLoader.style.opacity = "0";
+                setTimeout(function () {
+                    miniLoader.style.display = "none";
+                    miniLoader.style.opacity = "1";
+                }, 2000);
+
+                //Allow for 3 seconds before icon works again
+                setTimeout(function () {
+                    waitingForAxios = false;
+                }, 3000);
+            });
+
+        } else if ($(evt.target).is('.remove_favorite_button') && !waitingForAxios) {
+            //show loader
+            miniLoader.style.display = "inline-block";
+
+            //Set to true prevent duplicate requests before response
+            waitingForAxios = true;
+
             //Collect recipe ID, remove it database for user, update UI
             const recipeID = $(evt.target).attr('data-id');
-            await axios.post(`/remove_recipe/${recipeID}`);
-            handleSavedRecipeUiToggle($(evt.target));
+            await axios.post(`/remove_recipe/${recipeID}`).then(response => {
+                //Update UI function
+                handleSavedRecipeUiToggle($(evt.target));
+
+                //fade out loader
+                miniLoader.style.opacity = "0";
+                setTimeout(function () {
+                    miniLoader.style.display = "none";
+                    miniLoader.style.opacity = "1";
+                }, 2000);
+
+                //Allow for 3 seconds before
+                setTimeout(function () {
+                    waitingForAxios = false;
+                }, 3000);
+            });
         };
     };
 
@@ -258,11 +304,6 @@ $(document).ready(function () {
         }, 3300);
     }
 
-
-
-
-    //Event listener Adding recipe to favorites
-    $("#recipe-container").on("click", addRecipeToFavorites);
 
     //Bootstrap Tooltips to label icons that save recipes
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));

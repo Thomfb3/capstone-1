@@ -624,6 +624,10 @@ body {
     color: var(--primary);
 }
 
+.recipe-tile {
+
+}
+
 #loader {
     position: absolute;
     background-color: #fff;
@@ -643,6 +647,26 @@ body {
     margin: auto;
     margin-top: 100px;
  }
+
+ #mini-loader {
+    display: none;
+    right: 46px;
+    top: 7px;
+    position: relative;
+    background-color: #fff;
+    z-index: 4;
+    transition: all .3s ease;
+}
+
+.mini-loader {
+    border: 3px solid #f3f3f3; /* Light grey */
+    border-top: 3px solid var(--primary); /* Blue */
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    animation: spin .5s cubic-bezier(0.05, 0.74, 0.28, 0.99) infinite;
+ }
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -665,6 +689,7 @@ body {
 .loaded i {
     margin-top: 14px;
 }
+
 
 
 .hide-loader {
@@ -991,5 +1016,14 @@ body {
     .pagination-box {
         margin: 50px;
     }
-     
+
+    #mini-loader {
+        right: 4px;
+        top: -45px;
+    }
+
+    .recipe-tile {
+        margin-bottom: -20px;
+    }
+    
 }

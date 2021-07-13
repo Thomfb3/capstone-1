@@ -10,14 +10,28 @@
         {% if recipe.id in g.user.user_recipe_ids %}
         <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="fav fas fa-star remove_favorite_button"
                 data-id="{{recipe.id}}" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="Remove from Favorites"></i></h1>
+                title="Remove from Favorites"></i>
+
+                <div id="mini-loader">
+                    <div id="mini-loading-spinner" class="mini-loader">
+                    </div>
+                </div>
+                    
+        </h1>
 
         {% else %}
-        <h1 class="pb-3"><b>{{ recipe.title }}</b> <i class="fav far fa-star make_favorite_button"
+        <h1 class="pb-3 recipe-tile"><b>{{ recipe.title }}</b> <i class="fav far fa-star make_favorite_button"
                 data-id="{{recipe.id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Save to Favorites"></i>
+        
+                <div id="mini-loader">
+                    <div id="mini-loading-spinner" class="mini-loader">
+                    </div>
+                </div>
+
         </h1>
 
         {% endif %}
+
 
         <div id="add-favorite-success">
             <p id='add-favorite-success-message'></p>
