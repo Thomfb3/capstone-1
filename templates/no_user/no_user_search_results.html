@@ -6,8 +6,9 @@
 <div class="results-container" id="results-container">
 
     {% if results|length > 0 %}
-    <div class="p-3">
-        <p class="border-bottom pb-2">Search Results 1 - {{ results|length }}</p>
+    <div class="p-3 mb-3 border-bottom d-flex align-itmes-center justify-content-between">
+        <p class="flex-grow-1">Search Results 1 - {{ results|length }}</p>
+        <p >Login for more results</p>
     </div>
     {% else %}
     <div class="mb-3">
@@ -30,7 +31,7 @@
                         <div class="card-hide-overflow">
                             <img src="{{res.image}}" class="card-img-top " alt="{{res.title}}">
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-body d-flex flex-column justify-content-between">
                             <h5 class="card-title">{{res.title}}</h5>
                             <a href="#login" class="card-recipe-link">See recipe <span>&rarr;</span></a>
                         </div>

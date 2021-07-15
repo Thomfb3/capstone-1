@@ -579,13 +579,13 @@ body {
     padding-left: 10px;
 }
 
-.remove_favorite_button {
+.remove-favorite-button {
     color: var(--secondary);
     font-size: 31px;
     transform: translateY(-3px);
 }
 
-.make_favorite_button {
+.make-favorite-button {
     color: var(--primary);
     font-size: 31px;
     transform: translateY(-3px);
@@ -649,10 +649,7 @@ body {
  }
 
  #mini-loader {
-    display: none;
-    right: 46px;
-    top: 7px;
-    position: relative;
+    display: inline-block;
     background-color: #fff;
     z-index: 4;
     transition: all .3s ease;
@@ -834,7 +831,11 @@ body {
 .saved {
     color: var(--secondary);
 }
+
 .fav:hover {
+    cursor: pointer;
+}
+.far:hover {
     cursor: pointer;
 }
 
