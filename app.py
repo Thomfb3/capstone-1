@@ -33,6 +33,7 @@ API_SEARCH_BASE = "https://api.spoonacular.com/recipes/complexSearch"
 #Search results number
 SEARCH_RESULTS = "12"
 
+CUISINES = ["American", "Korean", "Mexican", "Chinese", "Indian", "Italian"]
 
 ##############################################################################
 # User signup/login/logout 
@@ -155,7 +156,7 @@ def homepage():
     signup_form = UserSignupForm()
     login_form = UserLoginForm()
 
-    return render_template('no_user/no_user_home.html', signup_form=signup_form, login_form=login_form)
+    return render_template('no_user/no_user_home.html', signup_form=signup_form, login_form=login_form, cuisines=CUISINES)
 
 
 
@@ -219,12 +220,12 @@ def home_logged_om():
         response = requests.get(f"https://api.spoonacular.com/recipes/informationBulk",  params=params)
         recipes = response.json()
         
-        return render_template('user/home.html', recipes=recipes)
+        return render_template('user/home.html', recipes=recipes, cuisines=CUISINES)
 
     else:
         #Else leave recipes empty
         recipes = [];
-        return render_template('user/home.html', recipes=recipes)
+        return render_template('user/home.html', recipes=recipes, cuisines=CUISINES)
 
 
 

@@ -14,6 +14,12 @@ The demographic for our users will be broad, basically anyone who cooks their ow
 ## API / Data
 The app will use the Spoonacular API for recipes, ingredients, and nutritional information. The users account info and saved recipes will be saved on our SQL database using PostgreSQL. Chart.js may also be included to visual nutritional information.
 
+## Stack
+The Backend: Python, Flask, Postgres, SQLAlchemy
+The Frontend: HTML, CSS, JavaScript, with Bootstrap 5 and JQuery
+Also included: Chart JS, Axios
+
+
 # Approach
 
 ## Overview

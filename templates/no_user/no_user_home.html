@@ -3,6 +3,7 @@
 {% block content %}
 
 {% include '/includes/search.html' %}
+{% include 'includes/cuisines.html' %}
 
 <div class="container">
     <div class="row">
@@ -36,13 +37,13 @@
         </div>
     </div>
 
-    <div class="row pt-5 pb-5 mt-5 mb-5 border-top">
-        <div class="col-lg-6">
+    <div class="row pt-5 pb-5 mt-5 mb-5 border-top flex-column-reverse flex-lg-row">
+        <div class="col-lg-6 ">
             <div class="home-card">
                 <img src="static/images/nutrition-chart-min.jpg" class="img-fluid home-image">
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6  ">
             <h2 class="home-header-2 text-center"><span class="big-text">Nutritional</span><br> information available.
                 <i class="fas fa-chart-pie home-search-icon"></i></h2>
         </div>

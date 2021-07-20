@@ -1,0 +1,16 @@
+<div class="container fav-cuisine-container">
+<h2 class="text-center pb-3" style="color: #054bfe;">Search Your Favorite Cuisine</h2>
+
+    <div class="cuisines-container">
+        {% for cuisine in cuisines %}
+        <a href="/results?q={{cuisine}}&offset=0">
+
+            <div class="cuisine-bubble">
+                <span class="cuisine-name">{{ cuisine }}</span>
+                <div class="cuisine-screen"></div>
+                <img src="/static/images/cuisines/{{cuisine}}.jpg" class="cuisine-image" />
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
