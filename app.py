@@ -27,7 +27,7 @@ toolbar = DebugToolbarExtension(app)
 connect_db(app)
 
 ##Spoonacular API key 
-API_KEY = "ac7991b98f02431da8a378c8d61af292"
+API_KEY = "12345"
 #API Search url base
 API_SEARCH_BASE = "https://api.spoonacular.com/recipes/complexSearch"
 #Search results number
